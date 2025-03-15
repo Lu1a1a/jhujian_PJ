@@ -1,12 +1,17 @@
 <script setup lang="ts">
+import { ref, Ref, onMounted, onUnmounted, computed } from "vue";
+import { useFadeIn } from "../../composables/useFadeIn";
 import "swiper/css/grid";
 import type { Swiper as SwiperType } from "swiper";
 import { Swiper as SwiperClass } from "swiper";
 import { Grid, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { useWindowSize } from "@vueuse/core";
-import { ref, computed } from "vue";
 const { width } = useWindowSize();
+const titleDom = ref<HTMLDivElement | null>(null);
+const companyImgDom = ref<HTMLDivElement | null>(null);
+const titlefadeTopState = ref<boolean>(true);
+const companyfadeTopState = ref<boolean>(true);
 const swiperRef = ref();
 const currentIdx = ref(0);
 const modules = ref([Grid, Autoplay]);
@@ -117,16 +122,26 @@ const leaveIcon = () => {
   swiperRef.value.autoplay.start();
 };
 const isMobile = computed(() => width.value < 768);
+const companyAnimate = () => {
+  useFadeIn(titleDom as Ref<HTMLDivElement>, titlefadeTopState as Ref<boolean>);
+  useFadeIn(companyImgDom as Ref<HTMLDivElement>, companyfadeTopState as Ref<boolean>);
+};
+onMounted(() => {
+  window.addEventListener("scroll", companyAnimate);
+});
+onUnmounted(() => {
+  window.removeEventListener("scroll", companyAnimate);
+});
 </script>
 <template>
   <div class="w-full relative h-screen mt-10 mb-40 px-5 md:grid md:grid-rows-5 md:grid-cols-2 gap-10 xl:px-28">
-    <div class="w-fit aspect-square flex flex-col gap-5 md:w-full md:h-full md:row-start-1 md:row-end-3 md:col-start-1 md:col-end-2 md:justify-evenly">
+    <div ref="titleDom" class="title w-fit aspect-square flex flex-col gap-5 md:w-full md:h-full md:row-start-1 md:row-end-3 md:col-start-1 md:col-end-2 md:justify-evenly">
       <span class="font-bold text-lg md:text-3xl lg:text-5xl">BRAND 集團十三大品牌</span>
       <span class="text-2xl font-light tracking-widest md:text-5xl md:tracking-normal"><span class="relative z-10 after:w-full after:h-1/2 after:bg-yellow-300 after:absolute after:top-1/2 after:left-0 after:-z-10 after:opacity-50">探索</span>各式美食</span>
       <span class="mt-auto md:mt-0 text-xl lg:text-2xl">築間致力帶給味蕾無盡的樂趣 </span>
       <span class="text-xl lg:text-2x">我們從未停止前進</span>
     </div>
-    <div class="w-full aspect-square my-10 relative overflow-hidden md:my-0 md:row-start-2 md:row-end-6 md:col-start-2 md:col-end-3 md:aspect-auto">
+    <div ref="companyImgDom" class="companyImg w-full aspect-square my-10 relative overflow-hidden md:my-0 md:row-start-2 md:row-end-6 md:col-start-2 md:col-end-3 md:aspect-auto">
       <TransitionGroup name="fade">
         <div v-for="(item, idx) in data" v-show="currentIdx === idx ? true : false" :key="item.img" class="w-full h-full absolute top-0 left-0">
           <img class="w-full h-full object-cover" :src="item.img" />
@@ -164,5 +179,11 @@ const isMobile = computed(() => width.value < 768);
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
+}
+.title,
+.companyImg {
+  opacity: var(--opacity, 0);
+  transform: translateY(var(--translateY, 20px));
+  transition: opacity 0.5s, transform 0.5s;
 }
 </style>

@@ -1,5 +1,18 @@
 <script setup lang="ts">
+import { ref, Ref, onMounted, onUnmounted } from "vue";
+import { useFadeIn } from "../../composables/useFadeIn";
 import { RouterLink, RouterView } from "vue-router";
+const carouselDom = ref<HTMLDivElement | null>(null);
+const fadeTopState = ref<boolean>(true);
+const newsAnimate = () => {
+  useFadeIn(carouselDom as Ref<HTMLDivElement>, fadeTopState as Ref<boolean>);
+};
+onMounted(() => {
+  window.addEventListener("scroll", newsAnimate);
+});
+onUnmounted(() => {
+  window.removeEventListener("scroll", newsAnimate);
+});
 </script>
 <template>
   <div class="w-full my-40">
@@ -8,18 +21,18 @@ import { RouterLink, RouterView } from "vue-router";
     </div>
     <div class="w-full mx-auto px-2 flex mb-10 md:w-2/3 xl:my-40">
       <div class="w-full flex sm:justify-center overflow-x-scroll md:flex md:w-fit 2xl:mr-auto 2xl:justify-normal">
-        <RouterLink class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl 2xl:text-2xl 2xl:px-10" :to="{ path: '/' }">所有訊息</RouterLink>
-        <RouterLink class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl 2xl:text-2xl 2xl:px-10" :to="{ path: '/activity' }">活動資訊</RouterLink>
-        <RouterLink class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl 2xl:text-2xl 2xl:px-10" :to="{ path: '/company' }">集團公告</RouterLink>
-        <RouterLink class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl 2xl:text-2xl 2xl:px-10" :to="{ path: '/media' }">媒體報導</RouterLink>
-        <RouterLink class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl md:pr-[0px] 2xl:text-2xl 2xl:px-10" :to="{ path: '/work' }">人才招募</RouterLink>
+        <RouterLink class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl 2xl:text-2xl 2xl:px-10" :to="{ path: '/home/allNews' }">所有訊息</RouterLink>
+        <RouterLink class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl 2xl:text-2xl 2xl:px-10" :to="{ path: '/home/activity' }">活動資訊</RouterLink>
+        <RouterLink class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl 2xl:text-2xl 2xl:px-10" :to="{ path: '/home/company' }">集團公告</RouterLink>
+        <RouterLink class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl 2xl:text-2xl 2xl:px-10" :to="{ path: '/home/media' }">媒體報導</RouterLink>
+        <RouterLink class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl md:pr-[0px] 2xl:text-2xl 2xl:px-10" :to="{ path: '/home/work' }">人才招募</RouterLink>
       </div>
       <span class="hidden relative items-center grow md:flex xl:grow-1">
         <span class="grow h-px bg-black mx-3"></span>
         <span class="flex items-center group font-bold 2xl:text-2xl">MORE 閱讀更多<span class="material-symbols-outlined align-middle transition group-hover:rotate-180">add</span></span>
       </span>
     </div>
-    <div class="w-full h-[180px] relative md:h-[300px] xl:mb-20 xl:h-[400px] 2xl:h-[500px]">
+    <div ref="carouselDom" class="carousel w-full h-[180px] relative md:h-[300px] xl:mb-20 xl:h-[400px] 2xl:h-[500px]">
       <router-view v-slot="{ Component }">
         <Transition name="fade" mode="out-in">
           <component :is="Component" />
@@ -61,5 +74,10 @@ import { RouterLink, RouterView } from "vue-router";
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
+}
+.carousel {
+  opacity: var(--opacity, 0);
+  transform: translateY(var(--translateY, 20px));
+  transition: opacity 0.5s, transform 0.5s;
 }
 </style>

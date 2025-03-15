@@ -44,9 +44,9 @@ const data = ref([
         delay: 5000,
         disableOnInteraction: false,
       }"
+      :modules="modules"
       :loop="true"
       :navigation="navigation"
-      :modules="modules"
       :slides-per-view="2"
       :space-between="30"
       :breakpoints="swiperBreakPoint"

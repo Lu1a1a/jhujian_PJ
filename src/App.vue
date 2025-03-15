@@ -1,38 +1,45 @@
 <script setup lang="ts">
+import startAnimation from "./components/animation/startAnimation.vue";
+import navigation from "./components/part/navigation.vue";
 import { ref, provide } from "vue";
-import startAnimation from "./components/startAnimation.vue";
-import navigation from "./components/homePage/navigation.vue";
-import banner from "./components/homePage/banner.vue";
-import brand from "./components/homePage/brand.vue";
-import news from "./components/homePage/news.vue";
-import company from "./components/homePage/company.vue";
-import pageFooter from "./components/homePage/footer.vue";
 const animateShow = ref(true);
 provide("animateShow", animateShow);
 </script>
 
 <template>
-  <TransitionGroup name="contentShow">
+  <Transition name="animateTransition">
     <startAnimation v-if="animateShow" />
-    <div v-else class="overflow-hidden bg-[url('./assets/img/JhuJian__background.jpg')]">
+    <div v-else class="w-full overflow-hidden bg-[url('../assets/img/JhuJian__background.jpg')]">
       <navigation />
-      <banner />
-      <brand />
-      <news />
-      <company />
-      <pageFooter />
+      <RouterView v-slot="{ Component }">
+        <Transition name="fade" mode="out-in">
+          <component :is="Component" />
+        </Transition>
+      </RouterView>
     </div>
-  </TransitionGroup>
+  </Transition>
 </template>
 
 <style scoped>
-.contentShow-enter-active {
-  transition: opacity 2s;
+.animateTransition-enter-active,
+.animateTransition-leave-active {
+  transition: opacity 1s;
 }
-.contentShow-enter-from {
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.animateTransition-enter-from,
+.animateTransition-leave-to,
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
 }
-.contentShow-enter-to {
+.animateTransition-enter-to,
+.animateTransition-leave-from,
+.fade-enter-to,
+.fade-leave-from {
   opacity: 1;
 }
 </style>

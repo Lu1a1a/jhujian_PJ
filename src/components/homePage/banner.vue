@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, Ref, onMounted } from "vue";
 import { useFadeIn } from "../../composables/useFadeIn";
-import { Pagination } from "swiper/modules";
+import { Pagination, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -9,6 +9,7 @@ const titleDom = ref<HTMLDivElement | null>(null);
 const carouselDom = ref<HTMLDivElement | null>(null);
 const fadeTopState = ref(true);
 const fadeBottomState = ref(true);
+const modules = ref([Pagination, Autoplay]);
 const swiperBreakPoint = {
   768: {
     slidesPerView: 1.5,
@@ -50,7 +51,18 @@ onMounted(() => {
       </div>
     </div>
     <div ref="carouselDom" class="carousel w-full">
-      <swiper :modules="[Pagination]" :loop="true" :slides-per-view="1" :space-between="0" :pagination="paginationOptions" :breakpoints="swiperBreakPoint">
+      <swiper
+        :autoplay="{
+          delay: 5000,
+          disableOnInteraction: false,
+        }"
+        :modules="modules"
+        :loop="true"
+        :slides-per-view="1"
+        :space-between="0"
+        :pagination="paginationOptions"
+        :breakpoints="swiperBreakPoint"
+      >
         <swiper-slide class="transition">
           <div class="m-auto">
             <img class="w-full object-cover" src="../../assets/img/banerImg/3_202405101410374pw0avSTl1.jpg" alt="" />
