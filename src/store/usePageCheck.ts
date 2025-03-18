@@ -6,15 +6,16 @@ export const usePageCheckStore = defineStore("pageCheck", () => {
   const isHome = ref(false);
   const isBooking = ref(true);
   const routePath = ref("");
-  const route = useRoute();
   //action
   const checkRoute = () => {
+    const route = useRoute();
+
     if (route.name === "booking") {
       isBooking.value = false;
       isHome.value = true;
-      routePath.value = "/home";
+      routePath.value = "/home/allNews";
     }
-    if (route.name === "home") {
+    if (route.name === "allNews") {
       isBooking.value = true;
       isHome.value = false;
       routePath.value = "/booking";

@@ -1,23 +1,50 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
+import { useWebStorage } from "../../composables/useWebStorage";
+import { TBookingDetail } from "../../type/TBookingDetail";
+const {
+  localStorageMethod: { localSet, localGet, localRemove },
+} = useWebStorage();
+
 const adults = ref(6);
-const childs = ref(6);
+const childs = ref(4);
+const EatAdults = ref(2);
+const Eatchilds = ref(0);
 const dataString = ref("選擇日期");
+const dateNum = ref(30);
+const thirtyDayM = [1, 3, 5, 7, 8, 10, 12];
 const activeMIdx = ref(-1);
 const activeDIdx = ref(-1);
 const selectM = ref(1);
 const selectD = ref(1);
 const showData = ref(false);
+const checkMouthDay = ref(false);
+const bookingName = ref("");
+const bookingTel = ref("");
+const bookingDateCheck = ref(true);
+const bookingNameCheck = ref(true);
+const bookingTelCheck = ref(true);
+const bookingPopUp = ref(false);
+const bookingSuccess = ref(false);
+const errorNameMes = ref("");
+const errorShow = ref(false);
+const errorTelMes = ref("");
+const searchTel = ref("");
+const errorSearchShow = ref(false);
+const searchPopUp = ref(false);
+const searchBookingDetail = ref<TBookingDetail>();
+const removeSuccess = ref(false);
+const telRule = /^\d{10}$/;
 const checkLimit = (e: Event) => {
   const peopleNum = Number((e.target as HTMLSelectElement).value);
   const type = (e.target as HTMLSelectElement).name;
   if (type === "adults") {
     childs.value = Math.abs(peopleNum - 6);
-    return;
+    EatAdults.value = peopleNum;
   }
   if (type === "childs") {
     adults.value = Math.abs(peopleNum - 6);
-    return;
+    Eatchilds.value = peopleNum;
   }
 };
 const toggleDate = () => {
@@ -36,17 +63,119 @@ const comfirmDate = () => {
 const focusM = (idx: number) => {
   activeMIdx.value = idx;
   selectM.value = idx + 1;
+  checkMouthDay.value = thirtyDayM.some((item) => item === selectM.value);
+  bookingDateCheck.value = true;
+  if (checkMouthDay.value) {
+    dateNum.value = 31;
+    return;
+  }
+  if (selectM.value === 2) {
+    dateNum.value = 28;
+    return;
+  }
+  dateNum.value = 30;
 };
 const focusD = (idx: number) => {
   activeDIdx.value = idx;
   selectD.value = idx + 1;
+  bookingDateCheck.value = true;
+};
+const errorMes = computed(() => {
+  return `輸入${errorNameMes.value}${errorTelMes.value}`;
+});
+const checkBooking = () => {
+  errorNameMes.value = "";
+  errorTelMes.value = "";
+  if (activeMIdx.value === -1 || activeDIdx.value === -1) {
+    bookingDateCheck.value = false;
+  }
+  if (bookingName.value === "") bookingNameCheck.value = false;
+  if (bookingTel.value === "") bookingTelCheck.value = false;
+  if (bookingNameCheck.value && !bookingTelCheck.value) {
+    errorTelMes.value = "正確電話號碼";
+    errorShow.value = true;
+    return;
+  }
+  if (bookingTelCheck.value && !bookingNameCheck.value) {
+    errorTelMes.value = "預約姓名";
+    errorShow.value = true;
+    return;
+  }
+  if (!bookingTelCheck.value && !bookingNameCheck.value) {
+    errorTelMes.value = "正確電話號碼";
+    errorNameMes.value = "預約姓名、";
+    errorShow.value = true;
+    return;
+  }
+  bookingPopUp.value = true;
+};
+const cancelBooking = () => {
+  bookingPopUp.value = false;
 };
 const comfirmBooking = () => {
-  //點擊後要開啟彈窗確認
-  //並顯示人數及時間
-  //再次按下確認就把資料存到cookie裡
-  //按取消則關掉彈裝窗就好
-  //彈窗還沒寫好
+  bookingSuccess.value = true;
+  localSet(`bookingDetail${bookingTel.value}`, {
+    name: bookingName.value,
+    tel: bookingTel.value,
+    adults: EatAdults.value,
+    childs: Eatchilds.value,
+    date: dataString.value,
+  });
+  setTimeout(() => {
+    bookingPopUp.value = false;
+    bookingSuccess.value = false;
+    bookingName.value = "";
+    bookingTel.value = "";
+    dataString.value = "選擇日期";
+    activeMIdx.value = -1;
+    activeDIdx.value = -1;
+    EatAdults.value = 2;
+    Eatchilds.value = 0;
+  }, 3500);
+};
+const changeName = (e: Event) => {
+  bookingName.value = (e.target as HTMLInputElement).value;
+  bookingNameCheck.value = true;
+};
+const changeTel = (e: Event) => {
+  bookingTel.value = (e.target as HTMLInputElement).value;
+  if (!telRule.test(bookingTel.value) && bookingTel.value != "") {
+    errorTelMes.value = "正確電話號碼";
+    errorShow.value = true;
+    bookingTelCheck.value = false;
+    return;
+  }
+  bookingTelCheck.value = true;
+  errorShow.value = false;
+};
+const changeSearchTel = (e: Event) => {
+  searchTel.value = (e.target as HTMLInputElement).value;
+  if (!telRule.test(searchTel.value) && searchTel.value != "") {
+    errorSearchShow.value = true;
+    return;
+  }
+  errorSearchShow.value = false;
+};
+const upDateBooking = () => {
+  if (!telRule.test(searchTel.value) || searchTel.value === "") {
+    errorSearchShow.value = true;
+    return;
+  }
+  searchPopUp.value = true;
+  searchBookingDetail.value = localGet(`bookingDetail${searchTel.value}`) as TBookingDetail;
+  if (searchBookingDetail.value === null) return;
+  console.log(searchBookingDetail.value);
+};
+const removeBooking = () => {
+  localRemove(`bookingDetail${searchTel.value}`);
+  removeSuccess.value = true;
+  setTimeout(() => {
+    removeSuccess.value = false;
+    searchPopUp.value = false;
+  }, 3000);
+};
+const closeDetail = () => {
+  searchPopUp.value = false;
 };
 onMounted(() => {
   window.addEventListener("click", () => {
@@ -69,29 +198,52 @@ onUnmounted(() => {
         <span class="text-4xl font-bold lg:text-6xl">築間餐飲</span>
         <div class="w-full mt-2 flex justify-between text-gray-800 lg:text-2xl lg:mt-4">
           <span>鍋物、燒烤、日料</span>
-          <span class="flex items-center w-fit cursor-pointer"><span class="material-symbols-outlined"> ios_share </span>Share</span>
+          <span class="flex items-center w-fit cursor-pointer">
+            <span class="material-symbols-outlined">ios_share</span>
+            Share
+          </span>
         </div>
-        <span class="w-fit mt-4 flex items-center border-b-4 border-gray-800 lg:text-4xl lg:mt-6 lg:pb-2 lg:w-full"> <span class="material-symbols-outlined lg:text-4xl"> calendar_today </span>我要訂位</span>
+        <span class="w-fit mt-4 flex items-center border-b-4 border-gray-800 lg:text-4xl lg:mt-6 lg:pb-2 lg:w-full">
+          <span class="material-symbols-outlined lg:text-4xl">calendar_today</span>
+          我要訂位
+        </span>
       </div>
       <div class="w-full my-2 flex flex-col gap-3 lg:my-6 lg:flex-row lg:flex-wrap lg:gap-0 lg:justify-between">
         <span class="text-4xl lg:w-full lg:mb-6">選擇訂位時段</span>
-        <div class="lg:w-[49%]">
+        <div class="lg:w-[49%] xl:mt-10">
           <span class="block mb-2 lg:text-3xl">用餐人數</span>
-          <div class="w-full flex gap-2">
+          <div class="w-full flex gap-2 lg:mt-7">
             <select class="w-1/2 pl-1 rounded-md lg:w-1/4 lg:py-2 lg:text-xl lg:grow" name="adults" @click.stop="checkLimit">
-              <option disabled>選擇人數</option>
-              <option v-for="n in adults" :key="n" :value="n">{{ n }}位大人</option>
+              <option v-for="n in adults" :key="n" :value="n" :selected="n == 2">{{ n }}位大人</option>
             </select>
             <select class="w-1/2 pl-1 rounded-md lg:w-1/4 lg:py-2 lg:text-xl lg:grow" name="childs" @click.stop="checkLimit">
-              <option value="選擇人數" disabled>選擇人數</option>
+              <option :value="0">0位小孩</option>
               <option v-for="n in childs" :key="n" :value="n">{{ n }}位小孩</option>
             </select>
           </div>
         </div>
-        <div class="lg:w-[49%] relative">
-          <span class="block mb-2 lg:text-3xl">用餐日期</span>
-          <div class="w-full">
-            <button class="w-full pl-1 rounded-md text-left bg-white lg:py-2 lg:pl-2 lg:text-xl" @click.stop="toggleDate">{{ dataString }}</button>
+        <div class="lg:w-[49%] relative xl:mt-10">
+          <span class="block mb-2 relative lg:text-3xl">
+            預約日期
+            <span
+              class="absolute top-1/2 left-1/3 translate-y-[-50%] text-sm text-red-600 lg:text-xl"
+              :class="{
+                hidden: bookingDateCheck,
+              }"
+            >
+              選擇預約日期
+            </span>
+          </span>
+          <div class="w-full lg:mt-7">
+            <button
+              class="w-full pl-1 rounded-md text-left border bg-white lg:py-2 lg:pl-2 lg:text-xl"
+              :class="{
+                'border-red-600': !bookingDateCheck,
+              }"
+              @click.stop="toggleDate"
+            >
+              {{ dataString }}
+            </button>
           </div>
           <div v-show="showData" class="w-full aspect-square absolute bottom-[100%] rounded-xl flex flex-col bg-[rgba(233,233,233,0.9)] lg:py-1 2xl:aspect-[2/1]" @click.stop="() => '禁止關閉'">
             <div class="w-full flex flex-wrap grow">
@@ -115,7 +267,7 @@ onUnmounted(() => {
                 <span class="w-full h-fit text-center text-2xl mb-2 font-bold">日</span>
                 <div class="w-full grow flex flex-wrap justify-between">
                   <span
-                    v-for="(n, idx) in 31"
+                    v-for="(n, idx) in dateNum"
                     :key="n"
                     class="w-[16%] m-1 rounded-lg text-center relative bg-slate-100 hover:bg-slate-300"
                     :class="{
@@ -135,10 +287,152 @@ onUnmounted(() => {
           </div>
         </div>
         <span class="w-full text-sm mt-2 lg:text-base">可接受 1-6 位訂位（含大人與小孩），實際訂位請依各門市現場狀況安排。</span>
-        <button class="w-fit py-1 px-2 mx-auto my-1 border border-black rounded-full lg:w-1/6 lg:text-2xl lg:my-10 lg:hover:bg-black lg:hover:text-white lg:transition-all" @click="comfirmBooking">確認預約訂位</button>
+        <div class="lg:w-[49%] lg:mt-10">
+          <span class="block mb-2 relative lg:text-3xl">
+            姓名、電話
+            <span
+              class="opacity-0 absolute top-1/2 left-1/3 translate-y-[-50%] text-sm text-red-600 lg:text-xl"
+              :class="{
+                'opacity-100': errorShow,
+              }"
+            >
+              {{ errorMes }}
+            </span>
+          </span>
+          <div class="w-full flex gap-2 lg:mt-7">
+            <input
+              type="text"
+              class="w-1/2 pl-1 py-1 rounded-md border lg:w-1/4 lg:py-2 lg:text-xl lg:grow"
+              :class="{
+                'border-red-600': bookingName === '' && !bookingNameCheck,
+                'focus:outline-red-600': bookingName === '' && !bookingNameCheck,
+              }"
+              placeholder="輸入姓名"
+              :value="bookingName"
+              @change="changeName"
+            />
+            <input
+              type="tel"
+              class="w-1/2 pl-1 py-1 rounded-md border lg:w-1/4 lg:py-2 lg:text-xl lg:grow"
+              :class="{
+                'border-red-600': (!telRule.test(bookingTel) && bookingTel != '') || !bookingTelCheck,
+                'focus:outline-red-600': (!telRule.test(bookingTel) && bookingTel != '') || !bookingTelCheck,
+              }"
+              placeholder="輸入電話號碼"
+              :value="bookingTel"
+              maxlength="10"
+              @change="changeTel"
+            />
+          </div>
+        </div>
+      </div>
+      <button class="w-1/2 block py-1 px-4 mx-auto mt-20 border border-black rounded-full lg:w-1/6 lg:text-2xl lg:hover:bg-black lg:hover:text-white lg:transition-all 2xl:py-4" @click="checkBooking">確認預約訂位</button>
+      <div class="w-full mt-10 pt-5 border-t border-dashed border-slate-400 lg:w-full lg:pt-10">
+        <span class="block mb-2 relative lg:text-3xl">
+          預約電話
+          <span
+            class="opacity-0 absolute top-1/2 right-1/3 translate-y-[-50%] text-sm text-red-600 lg:right-2/3 lg:text-xl"
+            :class="{
+              'opacity-100': errorSearchShow,
+            }"
+          >
+            輸入正確電話號碼
+          </span>
+        </span>
+        <div class="w-full lg:mt-7">
+          <input
+            type="tel"
+            class="w-full pl-1 py-1 rounded-md border lg:w-1/2 lg:py-2 lg:text-xl"
+            :class="{
+              'border-red-600': (!telRule.test(searchTel) && searchTel != '') || errorSearchShow,
+              'focus:outline-red-600': (!telRule.test(searchTel) && searchTel != '') || errorSearchShow,
+            }"
+            placeholder="輸入電話號碼"
+            :value="searchTel"
+            maxlength="10"
+            @change="changeSearchTel"
+          />
+        </div>
+      </div>
+      <button class="w-1/2 block py-1 px-4 mx-auto mt-20 border border-black rounded-full lg:w-1/6 lg:text-2xl lg:hover:bg-black lg:hover:text-white lg:transition-all 2xl:py-4" @click="upDateBooking">取消 / 查詢訂位</button>
+    </div>
+    <div
+      class="fixed inset-0 bg-[rgba(100,100,100,0.6)] z-50"
+      :class="{
+        hidden: !bookingPopUp,
+      }"
+    >
+      <div
+        class="w-1/2 h-1/2 px-2 flex flex-col justify-around absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] rounded-xl text-center bg-white lg:w-1/3 lg:aspect-square lg:justify-center lg:text-2xl lg:h-fit"
+        :class="{
+          hidden: !bookingPopUp,
+        }"
+      >
+        <span class="w-full block pb-3 border-b border-dashed text-slate-400 border-slate-400 lg:py-10" :class="{ hidden: bookingSuccess }">
+          預約日期：
+          <span class="block w-fit mx-auto mt-1 text-black">{{ dataString }}</span>
+        </span>
+        <span class="w-full block pb-3 border-b border-dashed text-slate-400 border-slate-400 lg:py-10" :class="{ hidden: bookingSuccess }">
+          用餐人數：
+          <span class="block w-fit mx-auto mt-1 text-black">{{ EatAdults }}位大人和{{ Eatchilds }}位小孩</span>
+        </span>
+
+        <span class="w-full block pb-3 border-b border-dashed text-slate-400 border-slate-400 lg:py-10" :class="{ hidden: bookingSuccess }">
+          聯絡資訊：
+          <span class="block w-fit mx-auto mt-1 text-black">{{ bookingName }} 先生/小姐</span>
+          <span class="block w-fit mx-auto text-black">{{ bookingTel }}</span>
+        </span>
+        <div class="w-full flex justify-around lg:py-10" :class="{ hidden: bookingSuccess }">
+          <button class="hover:text-gray-500 transition-all" @click="cancelBooking">取消</button>
+          <button class="hover:text-gray-500 transition-all" @click="comfirmBooking">確認</button>
+        </div>
+        <span class="lg:text-3xl" :class="{ hidden: !bookingSuccess }">預約成功！</span>
       </div>
     </div>
-    <!-- <div class="w-1/3 h-1/3 absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] bg-slate-400"></div> -->
+    <div
+      class="fixed inset-0 bg-[rgba(100,100,100,0.6)] z-50"
+      :class="{
+        hidden: !searchPopUp,
+      }"
+    >
+      <div
+        class="w-1/2 h-1/2 px-2 flex flex-col justify-around absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] rounded-xl text-center bg-white lg:w-1/3 lg:aspect-square lg:justify-center lg:text-2xl lg:h-fit"
+        :class="{
+          hidden: !searchPopUp,
+        }"
+      >
+        <span
+          class="w-full block pb-3 border-b border-dashed text-slate-400 border-slate-400 lg:py-10"
+          :class="{
+            hidden: !(searchBookingDetail === null),
+          }"
+        >
+          查無預約紀錄
+        </span>
+        <span class="w-full block pb-3 border-b border-dashed text-slate-400 border-slate-400 lg:py-10" :class="{ hidden: searchBookingDetail === null || removeSuccess }">
+          預約日期：
+          <span class="block w-fit mx-auto mt-1 text-black">{{ searchBookingDetail?.date }}</span>
+        </span>
+        <span class="w-full block pb-3 border-b border-dashed text-slate-400 border-slate-400 lg:py-10" :class="{ hidden: searchBookingDetail === null || removeSuccess }">
+          用餐人數：
+          <span class="block w-fit mx-auto mt-1 text-black">{{ searchBookingDetail?.adults }}位大人和{{ searchBookingDetail?.childs }}位小孩</span>
+        </span>
+        <span class="w-full block pb-3 border-b border-dashed text-slate-400 border-slate-400 lg:py-10" :class="{ hidden: searchBookingDetail === null || removeSuccess }">
+          聯絡資訊：
+          <span class="block w-fit mx-auto mt-1 text-black">{{ searchBookingDetail?.name }} 先生/小姐</span>
+          <span class="block w-fit mx-auto text-black">{{ searchBookingDetail?.tel }}</span>
+        </span>
+        <!--  -->
+        <span class="w-full block pb-3 text-slate-400 lg:py-10" :class="{ hidden: !removeSuccess }">
+          <span class="block w-fit mx-auto mt-1 text-black">取消成功</span>
+        </span>
+        <!--  -->
+        <div class="w-full flex justify-around lg:py-10" :class="{ hidden: removeSuccess }">
+          <button class="text-red-500 hover:text-red-800 transition-all" :class="{ hidden: searchBookingDetail === null }" @click="removeBooking">取消預約</button>
+          <button class="hover:text-gray-500 transition-all" @click="closeDetail">關閉</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <style scoped></style>

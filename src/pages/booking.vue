@@ -2,8 +2,7 @@
 import { onMounted } from "vue";
 import { usePageCheckStore } from "../store/usePageCheck";
 import BookingArea from "../components/bookingPage/BookingArea.vue";
-// import meun from "../components/bookingPage/meun";
-// import footer from "../components/bookingPage/footer";
+import pageFooter from "../components/part/footer.vue";
 const pageCheckStore = usePageCheckStore();
 const { checkRoute } = pageCheckStore;
 onMounted(() => {
@@ -13,6 +12,7 @@ onMounted(() => {
 <template>
   <div class="w-full">
     <BookingArea />
+    <pageFooter />
   </div>
 </template>
 <style scoped></style>

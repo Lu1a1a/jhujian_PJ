@@ -134,11 +134,14 @@ onUnmounted(() => {
 });
 </script>
 <template>
-  <div class="w-full relative h-screen mt-10 mb-40 px-5 md:grid md:grid-rows-5 md:grid-cols-2 gap-10 xl:px-28">
+  <div class="w-full relative h-screen mt-10 mb-48 px-5 md:grid md:grid-rows-5 md:grid-cols-2 gap-10 xl:px-28">
     <div ref="titleDom" class="title w-fit aspect-square flex flex-col gap-5 md:w-full md:h-full md:row-start-1 md:row-end-3 md:col-start-1 md:col-end-2 md:justify-evenly">
       <span class="font-bold text-lg md:text-3xl lg:text-5xl">BRAND 集團十三大品牌</span>
-      <span class="text-2xl font-light tracking-widest md:text-5xl md:tracking-normal"><span class="relative z-10 after:w-full after:h-1/2 after:bg-yellow-300 after:absolute after:top-1/2 after:left-0 after:-z-10 after:opacity-50">探索</span>各式美食</span>
-      <span class="mt-auto md:mt-0 text-xl lg:text-2xl">築間致力帶給味蕾無盡的樂趣 </span>
+      <span class="text-2xl font-light tracking-widest md:text-5xl md:tracking-normal">
+        <span class="relative z-10 after:w-full after:h-1/2 after:bg-yellow-300 after:absolute after:top-1/2 after:left-0 after:-z-10 after:opacity-50">探索</span>
+        各式美食
+      </span>
+      <span class="mt-auto md:mt-0 text-xl lg:text-2xl">築間致力帶給味蕾無盡的樂趣</span>
       <span class="text-xl lg:text-2x">我們從未停止前進</span>
     </div>
     <div ref="companyImgDom" class="companyImg w-full aspect-square my-10 relative overflow-hidden md:my-0 md:row-start-2 md:row-end-6 md:col-start-2 md:col-end-3 md:aspect-auto">
@@ -162,7 +165,10 @@ onUnmounted(() => {
       </Swiper>
     </div>
     <span class="flex items-center my-10 grow md:absolute md:bottom-[-10%] md:left-0 md:right-0 md:px-10 md:my-0 xl:px-28">
-      <span class="flex items-center group font-bold md:text-2xl">MORE 閱讀更多<span class="material-symbols-outlined align-middle md:text-4xl transition group-hover:rotate-180">add</span></span>
+      <span class="flex items-center group font-bold md:text-2xl">
+        MORE 閱讀更多
+        <span class="material-symbols-outlined align-middle md:text-4xl transition group-hover:rotate-180">add</span>
+      </span>
       <span class="grow h-px bg-black ml-3"></span>
     </span>
   </div>

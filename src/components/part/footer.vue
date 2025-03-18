@@ -23,10 +23,10 @@ onUnmounted(() => {
 });
 </script>
 <template>
-  <div class="w-full mt-60 px-10 xl:px-28">
-    <div class="w-1/4 aspect-square m-auto relative text-white cursor-pointer md:w-1/12">
+  <div class="w-full mt-20 px-10 xl:px-28">
+    <div class="w-1/4 aspect-square m-auto relative text-white cursor-pointer md:w-1/12 2xl:w-[6%]">
       <div class="arrowTop block w-full aspect-square relative rounded-full bg-black z-20" @click="pageTop" @mousemove="mouseIn" @mouseleave="mouseOut">
-        <span class="material-symbols-outlined absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-4xl pointer-events-none lg:text-6xl 2xl:text-8xl"> keyboard_arrow_up </span>
+        <span class="material-symbols-outlined absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-4xl pointer-events-none lg:text-6xl 2xl:text-6xl">keyboard_arrow_up</span>
       </div>
       <span ref="TopShadowDom" class="Shadow w-full aspect-square rounded-full absolute top-2 left-2 bg-gray-400 z-10"></span>
     </div>
