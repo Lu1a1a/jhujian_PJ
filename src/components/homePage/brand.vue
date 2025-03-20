@@ -37,7 +37,7 @@ onUnmounted(() => {
       </div>
       <div class="w-full absolute top-0 -translate-y-1/2">
         <div class="w-full">
-          <img class="w-full" src="../../assets/img/brandImg/JhuJian__index_jhujian.svg" />
+          <img class="w-full" src="../../assets/img/brandImg/JhuJian__index_jhujian.svg" alt="brandImg" />
         </div>
         <div class="w-20 aspect-square absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:w-36">
           <a class="moreLink w-full h-full rounded-full bg-black flex flex-col justify-center items-center relative z-10" href="#" @mousemove="mouseIn" @mouseleave="mouseOut">

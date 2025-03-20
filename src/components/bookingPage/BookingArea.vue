@@ -191,7 +191,12 @@ onUnmounted(() => {
 <template>
   <div class="w-full mt-20 relative lg:mt-28">
     <div class="w-full mb-3 lg:px-3 lg:mb-7">
-      <img class="w-full aspect-[3/1] object-cover" src="../../assets/img/3_202312211856499tlbjhxTE1.jpg" />
+      <img
+        class="w-full aspect-[3/1] object-cover"
+        src="../../assets/img/3_202312211856499tlbjhxTE1.jpg"
+        alt="bookingImg
+      "
+      />
     </div>
     <div class="w-full px-3">
       <div class="w-full">

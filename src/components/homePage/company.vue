@@ -49,62 +49,63 @@ const swiperBreakPoint = {
 };
 const data = ref([
   {
-    icon: "../../assets/companyImg/3_20231219150840oktl6ywAh0.jpg",
-    img: "../../assets/companyImg/hoverImg/3_202312141600232q11ec8kJ0.jpg",
+    icon: new URL("../../assets/companyImg/3_20231219150840oktl6ywAh0.jpg", import.meta.url).href,
+    img: new URL("../../assets/companyImg/hoverImg/3_202312141600232q11ec8kJ0.jpg", import.meta.url).href,
   },
   {
-    icon: "../../assets/companyImg/3_20231219151249qwfwqwpUE0.jpg",
-    img: "../../assets/companyImg/hoverImg/3_2023121416101264v7o8xR94.jpg",
+    icon: new URL("../../assets/companyImg/3_20231219151249qwfwqwpUE0.jpg", import.meta.url).href,
+    img: new URL("../../assets/companyImg/hoverImg/3_2023121416101264v7o8xR94.jpg", import.meta.url).href,
   },
   {
-    icon: "../../assets/companyImg/3_20231219151525koe6jjJOG1.jpg",
-    img: "../../assets/companyImg/hoverImg/3_20231214161548k7bc80KkT6.jpg",
+    icon: new URL("../../assets/companyImg/3_20231219151525koe6jjJOG1.jpg", import.meta.url).href,
+    img: new URL("../../assets/companyImg/hoverImg/3_20231214161548k7bc80KkT6.jpg", import.meta.url).href,
   },
   {
-    icon: "../../assets/companyImg/3_202312191517122jqvu4g2z2.jpg",
-    img: "../../assets/companyImg/hoverImg/3_20231214162200gsmaukIZr8.jpg",
+    icon: new URL("../../assets/companyImg/3_202312191517122jqvu4g2z2.jpg", import.meta.url).href,
+    img: new URL("../../assets/companyImg/hoverImg/3_20231214162200gsmaukIZr8.jpg", import.meta.url).href,
   },
   {
-    icon: "../../assets/companyImg/3_20231219193822c5gamcWnZ0.jpg",
-    img: "../../assets/companyImg/hoverImg/3_202312141631255wvo85cqV11.jpg",
+    icon: new URL("../../assets/companyImg/3_20231219193822c5gamcWnZ0.jpg", import.meta.url).href,
+    img: new URL("../../assets/companyImg/hoverImg/3_202312141631255wvo85cqV11.jpg", import.meta.url).href,
   },
   {
-    icon: "../../assets/companyImg/3_202312191950595n7k6aYwP2.jpg",
-    img: "../../assets/companyImg/hoverImg/3_202312141631255wvo85cqV11.jpg",
+    icon: new URL("../../assets/companyImg/3_202312191950595n7k6aYwP2.jpg", import.meta.url).href,
+    img: new URL("../../assets/companyImg/hoverImg/3_202312141631255wvo85cqV11.jpg", import.meta.url).href,
   },
   {
-    icon: "../../assets/companyImg/3_202312191950595n7k6aYwP2.jpg",
-    img: "../../assets/companyImg/hoverImg/3_202312141600232q11ec8kJ0.jpg",
+    icon: new URL("../../assets/companyImg/3_202312191950595n7k6aYwP2.jpg", import.meta.url).href,
+    img: new URL("../../assets/companyImg/hoverImg/3_202312141600232q11ec8kJ0.jpg", import.meta.url).href,
   },
   {
-    icon: "../../assets/companyImg/3_20240105111611zf6g89WEp0.jpg",
-    img: "../../assets/companyImg/hoverImg/3_20231219194216cbjy3khMQ1.jpg",
+    icon: new URL("../../assets/companyImg/3_20240105111611zf6g89WEp0.jpg", import.meta.url).href,
+    img: new URL("../../assets/companyImg/hoverImg/3_20231219194216cbjy3khMQ1.jpg", import.meta.url).href,
   },
   {
-    icon: "../../assets/companyImg/3_202404161644191qucssBGv0.jpg",
-    img: "../../assets/companyImg/hoverImg/3_202312141631255wvo85cqV11.jpg",
+    icon: new URL("../../assets/companyImg/3_202404161644191qucssBGv0.jpg", import.meta.url).href,
+    img: new URL("../../assets/companyImg/hoverImg/3_202312141631255wvo85cqV11.jpg", import.meta.url).href,
   },
   {
-    icon: "../../assets/companyImg/3_20240726110350fxx27qKAX2.png",
-    img: "../../assets/companyImg/hoverImg/3_20231219195528hmcttpg8g3.jpg",
+    icon: new URL("../../assets/companyImg/3_20240726110350fxx27qKAX2.png", import.meta.url).href,
+    img: new URL("../../assets/companyImg/hoverImg/3_20231219195528hmcttpg8g3.jpg", import.meta.url).href,
   },
   {
-    icon: "../../assets/companyImg/3_202407261128174vj74vY2y7.png",
-    img: "../../assets/companyImg/hoverImg/3_202312141631255wvo85cqV11.jpg",
+    icon: new URL("../../assets/companyImg/3_202407261128174vj74vY2y7.png", import.meta.url).href,
+    img: new URL("../../assets/companyImg/hoverImg/3_202312141631255wvo85cqV11.jpg", import.meta.url).href,
   },
   {
-    icon: "../../assets/companyImg/3_20240918134734ygfkvqgqH0.png",
-    img: "../../assets/companyImg/hoverImg/3_202407051325403mvk03FH40.png",
+    icon: new URL("../../assets/companyImg/3_20240918134734ygfkvqgqH0.png", import.meta.url).href,
+    img: new URL("../../assets/companyImg/hoverImg/3_202407051325403mvk03FH40.png", import.meta.url).href,
   },
   {
-    icon: "../../assets/companyImg/3_20240918134845oruiuh8UV1.png",
-    img: "../../assets/companyImg/hoverImg/3_20240913115334bs5ac4soC4.jpg",
+    icon: new URL("../../assets/companyImg/3_20240918134845oruiuh8UV1.png", import.meta.url).href,
+    img: new URL("../../assets/companyImg/hoverImg/3_20240913115334bs5ac4soC4.jpg", import.meta.url).href,
   },
   {
-    icon: "../../assets/companyImg/3_20250310174341u8andhVOt0.jpg",
-    img: "../../assets/companyImg/hoverImg/JhuJian__index_brand_01_750x850.jpg",
+    icon: new URL("../../assets/companyImg/3_20250310174341u8andhVOt0.jpg", import.meta.url).href,
+    img: new URL("../../assets/companyImg/hoverImg/JhuJian__index_brand_01_750x850.jpg", import.meta.url).href,
   },
 ]);
+
 const swiperInit = (val: SwiperClass) => {
   swiperRef.value = val;
 };
@@ -147,7 +148,7 @@ onUnmounted(() => {
     <div ref="companyImgDom" class="companyImg w-full aspect-square my-10 relative overflow-hidden md:my-0 md:row-start-2 md:row-end-6 md:col-start-2 md:col-end-3 md:aspect-auto">
       <TransitionGroup name="fade">
         <div v-for="(item, idx) in data" v-show="currentIdx === idx ? true : false" :key="item.img" class="w-full h-full absolute top-0 left-0">
-          <img class="w-full h-full object-cover" :src="item.img" />
+          <img class="w-full h-full object-cover" :src="item.img" alt="idx" />
         </div>
       </TransitionGroup>
     </div>
@@ -160,6 +161,7 @@ onUnmounted(() => {
               'contrast-100': currentIdx === idx && isMobile,
             }"
             :src="item.icon"
+            alt="idx"
           />
         </SwiperSlide>
       </Swiper>

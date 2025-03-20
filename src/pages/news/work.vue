@@ -16,22 +16,22 @@ const swiperBreakPoint = {
 };
 const data = ref([
   {
-    img: "../../assets/newsImg/3_20241204111217ic7yt0qbp1.jpg",
+    img: new URL("../../assets/newsImg/3_20241204111217ic7yt0qbp1.jpg", import.meta.url).href,
     title: "月神的烤驗",
     date: "2024/08/25",
   },
   {
-    img: "../../assets/newsImg/3_20241204111217ic7yt0qbp1.jpg",
+    img: new URL("../../assets/newsImg/3_20241204111217ic7yt0qbp1.jpg", import.meta.url).href,
     title: "會吃仲夏GOLD月神的烤驗",
     date: "2024/08/26",
   },
   {
-    img: "../../assets/newsImg/3_20241204111217ic7yt0qbp1.jpg",
+    img: new URL("../../assets/newsImg/3_20241204111217ic7yt0qbp1.jpg", import.meta.url).href,
     title: "仲夏GOLD會吃",
     date: "2024/08/27",
   },
   {
-    img: "../../assets/newsImg/3_20241204111217ic7yt0qbp1.jpg",
+    img: new URL("../../assets/newsImg/3_20241204111217ic7yt0qbp1.jpg", import.meta.url).href,
     title: "百萬會員祭 大口吃金幣",
     date: "2024/08/28",
   },
@@ -54,7 +54,7 @@ const data = ref([
       <swiper-slide v-for="item in data" :key="item.img">
         <div class="w-full h-full flex flex-col">
           <div class="w-full">
-            <img class="w-full" :src="item.img" />
+            <img class="w-full" :src="item.img" alt="workImg" />
           </div>
           <div class="grow flex flex-col md:text-2xl">
             <span class="w-full grow">{{ item.title }}</span>

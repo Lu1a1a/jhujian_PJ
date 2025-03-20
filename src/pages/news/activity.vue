@@ -16,22 +16,22 @@ const swiperBreakPoint = {
 };
 const data = ref([
   {
-    img: "../../assets/newsImg/3_20241003091851pbchobLxf0.jpg",
+    img: new URL("../../assets/newsImg/3_20241003091851pbchobLxf0.jpg", import.meta.url).href,
     title: "工商時報 | 北中南倉儲明年Q3陸續啟用",
     date: "2024/08/08",
   },
   {
-    img: "../../assets/newsImg/3_20241003091851pbchobLxf0.jpg",
+    img: new URL("../../assets/newsImg/3_20241003091851pbchobLxf0.jpg", import.meta.url).href,
     title: "三立新聞網 | 直擊菇菇農場！供應商、食安實驗室揭露",
     date: "2024/08/09",
   },
   {
-    img: "../../assets/newsImg/3_20241003091851pbchobLxf0.jpg",
+    img: new URL("../../assets/newsImg/3_20241003091851pbchobLxf0.jpg", import.meta.url).href,
     title: "工商時報 | 北中南倉儲明年Q3陸續啟用",
     date: "2024/08/10",
   },
   {
-    img: "../../assets/newsImg/3_20241003091851pbchobLxf0.jpg",
+    img: new URL("../../assets/newsImg/3_20241003091851pbchobLxf0.jpg", import.meta.url).href,
     title: "ETtoday財經雲 | 築間5月營收月增1成 雙品牌插旗香港",
     date: "2024/08/13",
   },
@@ -54,7 +54,7 @@ const data = ref([
       <swiper-slide v-for="item in data" :key="item.img">
         <div class="w-full h-full flex flex-col">
           <div class="w-full">
-            <img class="w-full" :src="item.img" />
+            <img class="w-full" :src="item.img" alt="activityImg" />
           </div>
           <div class="grow flex flex-col md:text-2xl">
             <span class="w-full grow">{{ item.title }}</span>
