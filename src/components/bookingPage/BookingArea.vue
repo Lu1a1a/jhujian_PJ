@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from "vue";
+import axios from "axios";
 import { useWebStorage } from "../../composables/useWebStorage";
 import { TBookingDetail } from "../../type/TBookingDetail";
+import { TCityWeather } from "../../type/TCityWeather";
 const {
   localStorageMethod: { localSet, localGet, localRemove },
 } = useWebStorage();
-
 const adults = ref(6);
 const childs = ref(4);
 const EatAdults = ref(2);
@@ -35,6 +36,11 @@ const searchPopUp = ref(false);
 const searchBookingDetail = ref<TBookingDetail>();
 const removeSuccess = ref(false);
 const telRule = /^\d{10}$/;
+const weatherData = ref<TCityWeather[]>([]);
+const cityName = ref();
+const cityWeather = ref();
+// const cityWeather = ref<TCityWeather[]>([{ locationName: "", weatherElement: [] }]);
+const cityIdx = ref(0);
 const checkLimit = (e: Event) => {
   const peopleNum = Number((e.target as HTMLSelectElement).value);
   const type = (e.target as HTMLSelectElement).name;
@@ -177,15 +183,37 @@ const removeBooking = () => {
 const closeDetail = () => {
   searchPopUp.value = false;
 };
-onMounted(() => {
+
+const getWeatherData = async () => {
+  try {
+    const result = await axios({
+      url: "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWA-07B7EC45-CEE1-4AEA-B4CD-6754E5B6D36C&locationName=&elementName=Wx",
+      method: "get",
+    });
+    weatherData.value = result.data.records.location;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const timer = setInterval(() => {
+  cityIdx.value++;
+  if (cityIdx.value >= weatherData.value.length) cityIdx.value = 0;
+  cityName.value = weatherData.value[cityIdx.value].locationName;
+  cityWeather.value = weatherData.value[cityIdx.value].weatherElement[0].time[1].parameter.parameterName;
+}, 10000);
+
+onMounted(async () => {
   window.addEventListener("click", () => {
     if (showData.value) showData.value = false;
   });
+  await getWeatherData();
 });
 onUnmounted(() => {
   window.removeEventListener("click", () => {
     if (showData.value) showData.value = false;
   });
+  clearInterval(timer);
 });
 </script>
 <template>
@@ -238,6 +266,7 @@ onUnmounted(() => {
             >
               選擇預約日期
             </span>
+            <span class="weatherAnimate block w-fit absolute top-1/2 right-0 translate-y-[-50%] lg:text-sm">{{ cityName }}今日天氣：{{ cityWeather }}</span>
           </span>
           <div class="w-full lg:mt-7">
             <button
@@ -331,7 +360,7 @@ onUnmounted(() => {
           </div>
         </div>
       </div>
-      <button class="w-1/2 block py-1 px-4 mx-auto mt-20 border border-black rounded-full lg:w-1/6 lg:text-2xl lg:hover:bg-black lg:hover:text-white lg:transition-all 2xl:py-4" @click="checkBooking">確認預約訂位</button>
+      <button class="w-1/2 block py-1 px-4 mx-auto mt-20 border border-black rounded-full lg:w-1/4 lg:text-2xl lg:hover:bg-black lg:hover:text-white lg:transition-all 2xl:py-4" @click="checkBooking">確認預約訂位</button>
       <div class="w-full mt-10 pt-5 border-t border-dashed border-slate-400 lg:w-full lg:pt-10">
         <span class="block mb-2 relative lg:text-3xl">
           預約電話
@@ -359,7 +388,7 @@ onUnmounted(() => {
           />
         </div>
       </div>
-      <button class="w-1/2 block py-1 px-4 mx-auto mt-20 border border-black rounded-full lg:w-1/6 lg:text-2xl lg:hover:bg-black lg:hover:text-white lg:transition-all 2xl:py-4" @click="upDateBooking">取消 / 查詢訂位</button>
+      <button class="w-1/2 block py-1 px-4 mx-auto mt-20 border border-black rounded-full lg:w-1/4 lg:text-2xl lg:hover:bg-black lg:hover:text-white lg:transition-all 2xl:py-4" @click="upDateBooking">取消 / 查詢訂位</button>
     </div>
     <div
       class="fixed inset-0 bg-[rgba(100,100,100,0.6)] z-50"
@@ -375,7 +404,9 @@ onUnmounted(() => {
       >
         <span class="w-full block pb-3 border-b border-dashed text-slate-400 border-slate-400 lg:py-10" :class="{ hidden: bookingSuccess }">
           預約日期：
-          <span class="block w-fit mx-auto mt-1 text-black">{{ dataString }}</span>
+          <span class="block w-fit mx-auto mt-1 text-black">
+            {{ dataString }}
+          </span>
         </span>
         <span class="w-full block pb-3 border-b border-dashed text-slate-400 border-slate-400 lg:py-10" :class="{ hidden: bookingSuccess }">
           用餐人數：
@@ -440,4 +471,22 @@ onUnmounted(() => {
     </div>
   </div>
 </template>
-<style scoped></style>
+<style scoped>
+.weatherAnimate {
+  animation: fade 10s infinite linear alternate;
+}
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+</style>

@@ -103,13 +103,14 @@ const NavFixed = () => {
 const watchStop = watch(scrollY, (newY, oldY) => {
   if (newY > oldY) {
     showNav.value = false;
+    brandShow.value = false;
     return;
   }
   showNav.value = true;
 });
 
 const goPosition = () => {
-  router.push({ path: "/position", query: { name: "築間" } });
+  router.push({ path: "/position", query: { name: "築間幸福鍋物" } });
 };
 const goHome = () => {
   router.push({ path: "/home/allNews" });
