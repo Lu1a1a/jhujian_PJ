@@ -39,7 +39,6 @@ const telRule = /^\d{10}$/;
 const weatherData = ref<TCityWeather[]>([]);
 const cityName = ref();
 const cityWeather = ref();
-// const cityWeather = ref<TCityWeather[]>([{ locationName: "", weatherElement: [] }]);
 const cityIdx = ref(0);
 const checkLimit = (e: Event) => {
   const peopleNum = Number((e.target as HTMLSelectElement).value);
@@ -170,7 +169,6 @@ const upDateBooking = () => {
   searchPopUp.value = true;
   searchBookingDetail.value = localGet(`bookingDetail${searchTel.value}`) as TBookingDetail;
   if (searchBookingDetail.value === null) return;
-  console.log(searchBookingDetail.value);
 };
 const removeBooking = () => {
   localRemove(`bookingDetail${searchTel.value}`);
@@ -191,6 +189,8 @@ const getWeatherData = async () => {
       method: "get",
     });
     weatherData.value = result.data.records.location;
+    cityName.value = weatherData.value[cityIdx.value].locationName;
+    cityWeather.value = weatherData.value[cityIdx.value].weatherElement[0].time[1].parameter.parameterName;
   } catch (error) {
     console.log(error);
   }
