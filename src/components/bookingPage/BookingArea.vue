@@ -5,7 +5,6 @@ import { TBookingDetail } from "../../type/TBookingDetail";
 const {
   localStorageMethod: { localSet, localGet, localRemove },
 } = useWebStorage();
-
 const adults = ref(6);
 const childs = ref(4);
 const EatAdults = ref(2);
@@ -38,6 +37,18 @@ const telRule = /^\d{10}$/;
 const checkLimit = (e: Event) => {
   const peopleNum = Number((e.target as HTMLSelectElement).value);
   const type = (e.target as HTMLSelectElement).name;
+  if (type === "adults") {
+    childs.value = Math.abs(peopleNum - 6);
+    EatAdults.value = peopleNum;
+  }
+  if (type === "childs") {
+    adults.value = Math.abs(peopleNum - 6);
+    Eatchilds.value = peopleNum;
+  }
+};
+const checkLimitMobile = (e: Event) => {
+  const peopleNum = Number((e.target as HTMLOptionElement).value);
+  const type = (e.target as HTMLOptionElement).id;
   if (type === "adults") {
     childs.value = Math.abs(peopleNum - 6);
     EatAdults.value = peopleNum;
@@ -214,11 +225,11 @@ onUnmounted(() => {
           <span class="block mb-2 lg:text-3xl">用餐人數</span>
           <div class="w-full flex gap-2 lg:mt-7">
             <select class="w-1/2 pl-1 rounded-md lg:w-1/4 lg:py-2 lg:text-xl lg:grow" name="adults" @click.stop="checkLimit">
-              <option v-for="n in adults" :key="n" :value="n" :selected="n == 2">{{ n }}位大人</option>
+              <option id="adults" v-for="n in adults" :key="n" :value="n" :selected="n == 2" @click="checkLimitMobile">{{ n }}位大人</option>
             </select>
             <select class="w-1/2 pl-1 rounded-md lg:w-1/4 lg:py-2 lg:text-xl lg:grow" name="childs" @click.stop="checkLimit">
-              <option :value="0">0位小孩</option>
-              <option v-for="n in childs" :key="n" :value="n">{{ n }}位小孩</option>
+              <option id="childs" :value="0" @click="checkLimitMobile">0位小孩</option>
+              <option id="childs" v-for="n in childs" :key="n" :value="n" @click="checkLimitMobile">{{ n }}位小孩</option>
             </select>
           </div>
         </div>
