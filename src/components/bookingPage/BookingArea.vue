@@ -52,6 +52,7 @@ const checkLimit = (e: Event) => {
     Eatchilds.value = peopleNum;
   }
 };
+
 const checkLimitMobile = (e: Event) => {
   const peopleNum = Number((e.target as HTMLOptionElement).value);
   const type = (e.target as HTMLOptionElement).id;
