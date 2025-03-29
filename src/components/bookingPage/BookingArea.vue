@@ -52,7 +52,10 @@ const checkLimit = (e: Event) => {
     Eatchilds.value = peopleNum;
   }
 };
+<<<<<<< HEAD
 
+=======
+>>>>>>> ace766644e98e67b33e6493668d05b12c53b2daa
 const checkLimitMobile = (e: Event) => {
   const peopleNum = Number((e.target as HTMLOptionElement).value);
   const type = (e.target as HTMLOptionElement).id;
@@ -259,12 +262,21 @@ onUnmounted(() => {
         <div class="lg:w-[49%] xl:mt-10">
           <span class="block mb-2 lg:text-3xl">用餐人數</span>
           <div class="w-full flex gap-2 lg:mt-7">
+<<<<<<< HEAD
             <select class="w-1/2 pl-1 rounded-md bg-white lg:w-1/4 lg:py-2 lg:text-xl lg:grow" name="adults" @click.stop="checkLimit">
               <option id="adults" v-for="n in adults" class="bg-white" :key="n" :value="n" :selected="n == 2" @click="checkLimitMobile">{{ n }}位大人</option>
             </select>
             <select class="w-1/2 pl-1 rounded-md bg-white lg:w-1/4 lg:py-2 lg:text-xl lg:grow" name="childs" @click.stop="checkLimit">
               <option class="bg-white" :value="0" @click="checkLimitMobile">0位小孩</option>
               <option id="childs" v-for="n in childs" class="bg-white" :key="n" :value="n" @click="checkLimitMobile">{{ n }}位小孩</option>
+=======
+            <select class="w-1/2 pl-1 rounded-md lg:w-1/4 lg:py-2 lg:text-xl lg:grow" name="adults" @click.stop="checkLimit">
+              <option id="adults" v-for="n in adults" :key="n" :value="n" :selected="n == 2" @click="checkLimitMobile">{{ n }}位大人</option>
+            </select>
+            <select class="w-1/2 pl-1 rounded-md lg:w-1/4 lg:py-2 lg:text-xl lg:grow" name="childs" @click.stop="checkLimit">
+              <option id="childs" :value="0" @click="checkLimitMobile">0位小孩</option>
+              <option id="childs" v-for="n in childs" :key="n" :value="n" @click="checkLimitMobile">{{ n }}位小孩</option>
+>>>>>>> ace766644e98e67b33e6493668d05b12c53b2daa
             </select>
           </div>
         </div>
