@@ -266,7 +266,10 @@ onUnmounted(() => {
             >
               選擇預約日期
             </span>
-            <span class="weatherAnimate block w-fit absolute top-1/2 right-0 translate-y-[-50%] lg:text-sm">{{ cityName }}今日天氣：{{ cityWeather }}</span>
+            <span class="weatherAnimate flex items-center  w-fit absolute top-1/2 right-0  translate-y-[-50%] lg:text-sm lg:tracking-wider">
+              <span class="material-symbols-outlined mr-1">cloud</span>
+              {{ cityName }}今日天氣：{{ cityWeather }}
+            </span>
           </span>
           <div class="w-full lg:mt-7">
             <button
