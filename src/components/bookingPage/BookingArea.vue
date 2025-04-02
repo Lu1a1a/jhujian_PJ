@@ -258,22 +258,14 @@ onUnmounted(() => {
         <div class="lg:w-[49%] relative xl:mt-10">
           <span class="block mb-2 relative lg:text-3xl">
             預約日期
-            <span
-              class="absolute top-1/2 left-1/3 translate-y-[-50%] text-sm text-red-600 lg:text-xl"
-              :class="{
-                hidden: bookingDateCheck,
-              }"
-            >
-              選擇預約日期
-            </span>
             <span class="weatherAnimate flex items-center  w-fit absolute top-1/2 right-0  translate-y-[-50%] lg:text-sm lg:tracking-wider">
               <span class="material-symbols-outlined mr-1">cloud</span>
               {{ cityName }}今日天氣：{{ cityWeather }}
             </span>
           </span>
-          <div class="w-full lg:mt-7">
+          <div class="w-full  lg:mt-7">
             <button
-              class="w-full pl-1 rounded-md text-left border bg-white lg:py-2 lg:pl-2 lg:text-xl"
+              class="w-full pl-1 relative rounded-md text-left border bg-white lg:py-2 lg:pl-2 lg:text-xl"
               :class="{
                 'border-red-600': !bookingDateCheck,
               }"
@@ -281,6 +273,14 @@ onUnmounted(() => {
             >
               {{ dataString }}
             </button>
+            <span
+              class="absolute top-full left-0  text-sm text-red-600 lg:text-xl"
+              :class="{
+                hidden: bookingDateCheck,
+              }"
+            >
+              選擇預約日期
+            </span>
           </div>
           <div v-show="showData" class="w-full aspect-square absolute bottom-[100%] rounded-xl flex flex-col bg-[rgba(233,233,233,0.9)] lg:py-1 2xl:aspect-[2/1]" @click.stop="() => '禁止關閉'">
             <div class="w-full flex flex-wrap grow">
@@ -324,17 +324,9 @@ onUnmounted(() => {
           </div>
         </div>
         <span class="w-full text-sm mt-2 lg:text-base">可接受 1-6 位訂位（含大人與小孩），實際訂位請依各門市現場狀況安排。</span>
-        <div class="lg:w-[49%] lg:mt-10">
-          <span class="block mb-2 relative lg:text-3xl">
+        <div class="relative lg:w-[49%] lg:mt-10">
+          <span class="block mb-2 lg:text-3xl">
             姓名、電話
-            <span
-              class="opacity-0 absolute top-1/2 left-1/3 translate-y-[-50%] text-sm text-red-600 lg:text-xl"
-              :class="{
-                'opacity-100': errorShow,
-              }"
-            >
-              {{ errorMes }}
-            </span>
           </span>
           <div class="w-full flex gap-2 lg:mt-7">
             <input
@@ -361,22 +353,22 @@ onUnmounted(() => {
               @change="changeTel"
             />
           </div>
+          <span
+              class="opacity-0 absolute top-full text-sm text-red-600 lg:text-xl"
+              :class="{
+                'opacity-100': errorShow,
+              }"
+            >
+              {{ errorMes }}
+            </span>
         </div>
       </div>
       <button class="w-1/2 block py-1 px-4 mx-auto mt-20 border border-black rounded-full lg:w-1/4 lg:text-2xl lg:hover:bg-black lg:hover:text-white lg:transition-all 2xl:py-4" @click="checkBooking">確認預約訂位</button>
       <div class="w-full mt-10 pt-5 border-t border-dashed border-slate-400 lg:w-full lg:pt-10">
-        <span class="block mb-2 relative lg:text-3xl">
+        <span class="block mb-2 lg:text-3xl">
           預約電話
-          <span
-            class="opacity-0 absolute top-1/2 right-1/3 translate-y-[-50%] text-sm text-red-600 lg:right-2/3 lg:text-xl"
-            :class="{
-              'opacity-100': errorSearchShow,
-            }"
-          >
-            輸入正確電話號碼
-          </span>
         </span>
-        <div class="w-full lg:mt-7">
+        <div class="w-full relative lg:mt-7">
           <input
             type="tel"
             class="w-full pl-1 py-1 rounded-md border lg:w-1/2 lg:py-2 lg:text-xl"
@@ -389,6 +381,14 @@ onUnmounted(() => {
             maxlength="10"
             @change="changeSearchTel"
           />
+          <span
+            class="opacity-0 absolute top-full left-0 text-sm text-red-600 lg:right-2/3 lg:text-xl"
+            :class="{
+              'opacity-100': errorSearchShow,
+            }"
+          >
+            輸入正確電話號碼
+          </span>
         </div>
       </div>
       <button class="w-1/2 block py-1 px-4 mx-auto mt-20 border border-black rounded-full lg:w-1/4 lg:text-2xl lg:hover:bg-black lg:hover:text-white lg:transition-all 2xl:py-4" @click="upDateBooking">取消 / 查詢訂位</button>
