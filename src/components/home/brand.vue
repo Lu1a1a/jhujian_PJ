@@ -33,11 +33,11 @@ onUnmounted(() => {
     </div>
     <div class="w-full relative mt-60">
       <div class="w-full h-screen relative overflow-hidden">
-        <img ref="picDom" class="pic w-full h-[120%] object-cover absolute top-0 bottom-0 my-auto bg-red-900" src="../../assets/img/brandImg/JhuJian__index_about_1920x1080.jpg" alt="meat" />
+        <img ref="picDom" class="pic w-full h-[120%] object-cover absolute top-0 bottom-0 my-auto bg-red-900" src="../../assets/img/bg/JhuJian__story_bg.jpg" alt="meat" />
       </div>
       <div class="w-full absolute top-0 -translate-y-1/2">
         <div class="w-full">
-          <img class="w-full" src="../../assets/img/brandImg/JhuJian__index_jhujian.svg" alt="brandImg" />
+          <img class="w-full" src="../../assets/img/logo/JhuJian__story_logo.svg" alt="brandImg" />
         </div>
         <div class="w-20 aspect-square absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:w-36">
           <a class="moreLink w-full h-full rounded-full bg-black flex flex-col justify-center items-center relative z-10" href="#" @mousemove="mouseIn" @mouseleave="mouseOut">

@@ -16,29 +16,29 @@ const swiperBreakPoint = {
 };
 const data = ref([
   {
-    img: new URL("../../assets/newsImg/3_20241030102143p6uy37ZPP0.jpg", import.meta.url).href,
-    title: "蛇來運轉 點數10點超放大.ᐟ.ᐟ.ᐟ",
-    date: "2024/08/13",
+    img: new URL("../../assets/newsImg/3_20241022140834198ea2wTn0.jpg", import.meta.url).href,
+    title: "【04/07營業公告】",
+    date: "2024/08/01",
   },
   {
-    img: new URL("../../assets/newsImg/3_20241030102143p6uy37ZPP0.jpg", import.meta.url).href,
-    title: "蛇來運轉",
-    date: "2024/08/14",
+    img: new URL("../../assets/newsImg/3_20241022140834198ea2wTn0.jpg", import.meta.url).href,
+    title: "【10/03營業公告】",
+    date: "2024/08/02",
   },
   {
-    img: new URL("../../assets/newsImg/3_20241030102143p6uy37ZPP0.jpg", import.meta.url).href,
-    title: "點數10點超放大.ᐟ.ᐟ.ᐟ",
-    date: "2024/08/15",
+    img: new URL("../../assets/newsImg/3_20241022140834198ea2wTn0.jpg", import.meta.url).href,
+    title: "【10/08營業公告】",
+    date: "2024/08/03",
   },
   {
-    img: new URL("../../assets/newsImg/3_20241030102143p6uy37ZPP0.jpg", import.meta.url).href,
-    title: "蛇來運轉 點數7000點超放大.ᐟ.ᐟ.ᐟ",
-    date: "2024/08/16",
+    img: new URL("../../assets/newsImg/3_20241022140834198ea2wTn0.jpg", import.meta.url).href,
+    title: "【11/08營業公告】",
+    date: "2024/08/04",
   },
 ]);
 </script>
 <template>
-  <div>
+  <div class="w-full relative">
     <swiper
       :autoplay="{
         delay: 5000,
@@ -54,7 +54,7 @@ const data = ref([
       <swiper-slide v-for="item in data" :key="item.img">
         <div class="w-full h-full flex flex-col">
           <div class="w-full">
-            <img class="w-full" :src="item.img" alt="companyImg" />
+            <img class="w-full" :src="item.img" alt="allNewsImg" />
           </div>
           <div class="grow flex flex-col md:text-2xl">
             <span class="w-full grow">{{ item.title }}</span>
@@ -63,8 +63,8 @@ const data = ref([
         </div>
       </swiper-slide>
     </swiper>
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next "></div>
+    <div class="swiper-button-prev "></div>
   </div>
 </template>
 <style scoped>

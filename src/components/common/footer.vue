@@ -31,9 +31,9 @@ onUnmounted(() => {
       <span ref="TopShadowDom" class="Shadow w-full aspect-square rounded-full absolute top-2 left-2 bg-gray-400 z-10"></span>
     </div>
     <div class="w-full mt-10 mb-7 relative lg:my-20">
-      <img class="w-full" src="../../assets/footerImg/menu_jhujian.png" alt="footerImg" />
+      <img class="w-full" src="../../assets/img/logo/jhujian_big_logo.png" alt="footerImg" />
       <div ref="logoImgDom" class="logoImg w-1/2 mt-10 mx-auto lg:absolute lg:bottom-0 lg:right-0 lg:w-1/4">
-        <img class="w-full h-full" src="../../assets/footerImg/JhuJian__footer_logo.svg" alt="footerLogo" />
+        <img class="w-full h-full" src="../../assets/img/logo/JhuJian_xsm_logo.svg" alt="footerLogo" />
       </div>
     </div>
     <div class="w-full text-center md:flex md:items-center md:my-10">

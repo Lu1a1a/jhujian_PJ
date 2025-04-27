@@ -16,37 +16,37 @@ const swiperBreakPoint = {
 };
 const data = ref([
   {
-    img: new URL("../../assets/newsImg/3_20241022140834198ea2wTn0.jpg", import.meta.url).href,
-    title: "【04/07營業公告】",
-    date: "2024/08/01",
+    img: new URL("../../assets/newsImg/3_20241003091851pbchobLxf0.jpg", import.meta.url).href,
+    title: "工商時報 | 北中南倉儲明年Q3陸續啟用",
+    date: "2024/08/08",
   },
   {
-    img: new URL("../../assets/newsImg/3_20241022140834198ea2wTn0.jpg", import.meta.url).href,
-    title: "【10/03營業公告】",
-    date: "2024/08/02",
+    img: new URL("../../assets/newsImg/3_20241003091851pbchobLxf0.jpg", import.meta.url).href,
+    title: "三立新聞網 | 直擊菇菇農場！供應商、食安實驗室揭露",
+    date: "2024/08/09",
   },
   {
-    img: new URL("../../assets/newsImg/3_20241022140834198ea2wTn0.jpg", import.meta.url).href,
-    title: "【10/08營業公告】",
-    date: "2024/08/03",
+    img: new URL("../../assets/newsImg/3_20241003091851pbchobLxf0.jpg", import.meta.url).href,
+    title: "工商時報 | 北中南倉儲明年Q3陸續啟用",
+    date: "2024/08/10",
   },
   {
-    img: new URL("../../assets/newsImg/3_20241022140834198ea2wTn0.jpg", import.meta.url).href,
-    title: "【11/08營業公告】",
-    date: "2024/08/04",
+    img: new URL("../../assets/newsImg/3_20241003091851pbchobLxf0.jpg", import.meta.url).href,
+    title: "ETtoday財經雲 | 築間5月營收月增1成 雙品牌插旗香港",
+    date: "2024/08/13",
   },
 ]);
 </script>
 <template>
-  <div>
+  <div class="w-full relative">
     <swiper
       :autoplay="{
         delay: 5000,
         disableOnInteraction: false,
       }"
+      :modules="modules"
       :loop="true"
       :navigation="navigation"
-      :modules="modules"
       :slides-per-view="2"
       :space-between="30"
       :breakpoints="swiperBreakPoint"
@@ -54,7 +54,7 @@ const data = ref([
       <swiper-slide v-for="item in data" :key="item.img">
         <div class="w-full h-full flex flex-col">
           <div class="w-full">
-            <img class="w-full" :src="item.img" alt="allNewsImg" />
+            <img class="w-full" :src="item.img" alt="activityImg" />
           </div>
           <div class="grow flex flex-col md:text-2xl">
             <span class="w-full grow">{{ item.title }}</span>
@@ -85,12 +85,9 @@ const data = ref([
   width: 80%;
 }
 .swiper-slide {
-  width: 30% !important;
+  height: auto !important;
 }
 @media screen and (max-width: 768px) {
-  .swiper-slide {
-    width: 45% !important;
-  }
   .swiper-button-prev {
     left: 2%;
   }

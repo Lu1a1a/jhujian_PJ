@@ -5,6 +5,7 @@ import { Pagination, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
+import { RouterLink } from "vue-router";
 const titleDom = ref<HTMLDivElement | null>(null);
 const carouselDom = ref<HTMLDivElement | null>(null);
 const fadeTopState = ref(true);
@@ -39,13 +40,13 @@ onMounted(() => {
       <div class="w-full my-10">
         <ul class="w-full flex justify-center breadCrumbs">
           <li class="w-fit px-5 relative">
-            <a class="block relative after:w-full after:h-1/2 after:bg-yellow-300 after:opacity-50 after:absolute after:bottom-0 after:left-0 after:-z-10 after:scale-x-0 after:transition after:origin-right hover:after:scale-x-100 hover:after:origin-left text-sm font-medium md:text-2xl" href="#">Group 集團</a>
+            <RouterLink :to="{ path: '/group' }" class="block relative after:w-full after:h-1/2 after:bg-yellow-300 after:opacity-50 after:absolute after:bottom-0 after:left-0 after:-z-10 after:scale-x-0 after:transition after:duration-500 after:origin-right hover:after:scale-x-100 hover:after:origin-left text-sm font-medium md:text-2xl" href="#">Group 集團</RouterLink>
           </li>
           <li class="w-fit px-5 relative">
-            <a class="block relative after:w-full after:h-1/2 after:bg-yellow-300 after:opacity-50 after:absolute after:bottom-0 after:left-0 after:-z-10 after:scale-x-0 after:transition after:origin-right hover:after:scale-x-100 hover:after:origin-left text-sm font-medium md:text-2xl" href="#">NEWS 新訊</a>
+            <RouterLink :to="{ path: '/news' }" class="block relative after:w-full after:h-1/2 after:bg-yellow-300 after:opacity-50 after:absolute after:bottom-0 after:left-0 after:-z-10 after:scale-x-0 after:transition after:duration-500 after:origin-right hover:after:scale-x-100 hover:after:origin-left text-sm font-medium md:text-2xl" href="#">NEWS 新訊</RouterLink>
           </li>
           <li class="w-fit px-5 relative">
-            <a class="block relative after:w-full after:h-1/2 after:bg-yellow-300 after:opacity-50 after:absolute after:bottom-0 after:left-0 after:-z-10 after:scale-x-0 after:transition after:origin-right hover:after:scale-x-100 hover:after:origin-left text-sm font-medium md:text-2xl" href="#">MEMBER 會員</a>
+            <RouterLink :to="{ path: '/member' }" class="block relative after:w-full after:h-1/2 after:bg-yellow-300 after:opacity-50 after:absolute after:bottom-0 after:left-0 after:-z-10 after:scale-x-0 after:transition after:duration-500 after:origin-right hover:after:scale-x-100 hover:after:origin-left text-sm font-medium md:text-2xl" href="#">MEMBER 會員</RouterLink>
           </li>
         </ul>
       </div>
@@ -56,6 +57,7 @@ onMounted(() => {
           delay: 5000,
           disableOnInteraction: false,
         }"
+        :speed = 1000
         :modules="modules"
         :loop="true"
         :slides-per-view="1"

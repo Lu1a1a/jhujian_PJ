@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import startAnimation from "./components/animation/startAnimation.vue";
-import navigation from "./components/part/navigation.vue";
+import navigation from "./components/common/navigation.vue";
 import { ref, provide } from "vue";
 const animateShow = ref(true);
 provide("animateShow", animateShow);
@@ -9,7 +9,7 @@ provide("animateShow", animateShow);
 <template>
   <Transition name="animateTransition">
     <startAnimation v-if="animateShow" />
-    <div v-else class="w-full overflow-hidden bg-[url('../assets/img/JhuJian__background.jpg')]">
+    <div v-else class="w-full overflow-hidden bg-[url('./assets/img/bg/JhuJian_bg.jpg')]">
       <navigation />
       <RouterView v-slot="{ Component }">
         <Transition name="fade" mode="out-in">

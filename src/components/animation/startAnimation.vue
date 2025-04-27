@@ -19,12 +19,12 @@ const animateEnd = () => {
     <div v-if="containerAnimate" class="w-full relative">
       <Transition name="bg" appear @after-enter="logoUp">
         <div v-if="bgAnimate" class="w-full h-screen brightness-[0.3]">
-          <img class="w-full h-full object-cover align-top" src="../../assets/img/3_202312211856499tlbjhxTE1.jpg" alt="animateBg" />
+          <img class="w-full h-full object-cover align-top" src="../../assets/img/bg/banner_bg.jpg" alt="animateBg" />
         </div>
       </Transition>
       <Transition name="logo" @after-enter="zoomOut">
         <div v-if="logoAnimate" class="w-1/2 absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]">
-          <img class="w-full align-top" src="../../assets/img/JhuJian__jhujian.svg" alt="animateLogo" />
+          <img class="w-full align-top" src="../../assets/img/logo/JhuJian_mid_logo.svg" alt="animateLogo" />
         </div>
       </Transition>
     </div>

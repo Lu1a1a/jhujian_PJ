@@ -38,7 +38,7 @@ const data = ref([
 ]);
 </script>
 <template>
-  <div>
+   <div class="w-full relative">
     <swiper
       :autoplay="{
         delay: 5000,

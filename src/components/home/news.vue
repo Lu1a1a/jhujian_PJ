@@ -35,7 +35,7 @@ onUnmounted(() => {
         </span>
       </span>
     </div>
-    <div ref="carouselDom" class="carousel w-full h-[180px] relative md:h-[300px] xl:mb-20 xl:h-[400px] 2xl:h-[500px]">
+    <div ref="carouselDom" class="carousel w-full relative ">
       <router-view v-slot="{ Component }">
         <Transition name="fade" mode="out-in">
           <component :is="Component" />

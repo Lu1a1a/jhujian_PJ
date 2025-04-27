@@ -16,29 +16,29 @@ const swiperBreakPoint = {
 };
 const data = ref([
   {
-    img: new URL("../../assets/newsImg/3_20241204111217ic7yt0qbp1.jpg", import.meta.url).href,
-    title: "月神的烤驗",
-    date: "2024/08/25",
+    img: new URL("../../assets/newsImg/3_20241030102143p6uy37ZPP0.jpg", import.meta.url).href,
+    title: "蛇來運轉 點數10點超放大.ᐟ.ᐟ.ᐟ",
+    date: "2024/08/13",
   },
   {
-    img: new URL("../../assets/newsImg/3_20241204111217ic7yt0qbp1.jpg", import.meta.url).href,
-    title: "會吃仲夏GOLD月神的烤驗",
-    date: "2024/08/26",
+    img: new URL("../../assets/newsImg/3_20241030102143p6uy37ZPP0.jpg", import.meta.url).href,
+    title: "蛇來運轉",
+    date: "2024/08/14",
   },
   {
-    img: new URL("../../assets/newsImg/3_20241204111217ic7yt0qbp1.jpg", import.meta.url).href,
-    title: "仲夏GOLD會吃",
-    date: "2024/08/27",
+    img: new URL("../../assets/newsImg/3_20241030102143p6uy37ZPP0.jpg", import.meta.url).href,
+    title: "點數10點超放大.ᐟ.ᐟ.ᐟ",
+    date: "2024/08/15",
   },
   {
-    img: new URL("../../assets/newsImg/3_20241204111217ic7yt0qbp1.jpg", import.meta.url).href,
-    title: "百萬會員祭 大口吃金幣",
-    date: "2024/08/28",
+    img: new URL("../../assets/newsImg/3_20241030102143p6uy37ZPP0.jpg", import.meta.url).href,
+    title: "蛇來運轉 點數7000點超放大.ᐟ.ᐟ.ᐟ",
+    date: "2024/08/16",
   },
 ]);
 </script>
 <template>
-  <div>
+   <div class="w-full relative">
     <swiper
       :autoplay="{
         delay: 5000,
@@ -54,7 +54,7 @@ const data = ref([
       <swiper-slide v-for="item in data" :key="item.img">
         <div class="w-full h-full flex flex-col">
           <div class="w-full">
-            <img class="w-full" :src="item.img" alt="workImg" />
+            <img class="w-full" :src="item.img" alt="companyImg" />
           </div>
           <div class="grow flex flex-col md:text-2xl">
             <span class="w-full grow">{{ item.title }}</span>

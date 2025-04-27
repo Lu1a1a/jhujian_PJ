@@ -2,11 +2,14 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import home from "../pages/home.vue";
 import booking from "../pages/booking.vue";
 import position from "../pages/position.vue";
-import allNews from "../pages/news/allNews.vue";
-import activity from "../pages/news/activity.vue";
-import company from "../pages/news/company.vue";
-import media from "../pages/news/media.vue";
-import work from "../pages/news/work.vue";
+import group from "../pages/group.vue";
+import news from "../pages/news.vue";
+import member from "../pages/member.vue";
+import allNews from "../pages/newsCarousel/allNews.vue";
+import activity from "../pages/newsCarousel/activity.vue";
+import company from "../pages/newsCarousel/company.vue";
+import media from "../pages/newsCarousel/media.vue";
+import work from "../pages/newsCarousel/work.vue";
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
@@ -52,6 +55,21 @@ const router = createRouter({
       name: "position",
       path: "/position",
       component: position,
+    },
+    {
+      name: "group",
+      path: "/group",
+      component: group,
+    },
+    {
+      name: "news",
+      path: "/news",
+      component: news,
+    },
+    {
+      name: "member",
+      path: "/member",
+      component: member,
     },
   ],
 });

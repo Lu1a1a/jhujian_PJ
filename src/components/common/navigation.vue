@@ -167,8 +167,8 @@ onUnmounted(() => {
         </div>
       </li>
       <li class="w-1/4">
-        <a href="#">
-          <img class="m-auto" src="../../assets/img/JhuJian__logo.svg" alt="logo" />
+        <a href="#" @click="goHome">
+          <img class="m-auto" src="../../assets/img/logo/JhuJian_sm_logo.svg" alt="logo"  />
         </a>
       </li>
       <ul class="w-1/4 flex text-center lg:justify-around">
@@ -268,7 +268,7 @@ onUnmounted(() => {
       </span>
     </div>
     <div class="fixed bottom-0 -z-10">
-      <img src="../../assets/img/menu_jhujian.png" alt="menu_logo" />
+      <img src="../../assets/img/logo/JhuJian_big_logo.png" alt="menu_logo" />
     </div>
     <span class="material-symbols-outlined block fixed top-5 right-5 md:absolute md:right-10 scale-125 cursor-pointer z-20 lg:text-4xl" @click="menuSwitch">close</span>
   </div>
@@ -299,6 +299,6 @@ onUnmounted(() => {
   transition: height 0.5s, opacity 0.5s linear;
 }
 .selfBgImg {
-  background-image: url("../../assets/img/JhuJian__background.jpg");
+  background-image: url("../../assets/img/bg/JhuJian_bg.jpg");
 }
 </style>
