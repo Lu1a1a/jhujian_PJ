@@ -29,25 +29,42 @@ onUnmounted(() => {
     <div ref="titleDom" class="title w-full px-5 md:px-0">
       <span class="block my-10 text-center text-2xl md:text-3xl">築間餐飲集團</span>
       <span class="block my-10 font-extralight text-3xl text-center md:text-5xl">讓我們一起變熟吧！</span>
-      <span class="block my-14 font-light text-lg text-center md:text-xl">築間以漁獲起家，堅持用拉近你我之間的距離，打造一頓頓溫暖的用餐體驗。</span>
+      <span class="block my-14 font-light text-lg text-center md:text-xl">
+        築間以漁獲起家，堅持用拉近你我之間的距離，打造一頓頓溫暖的用餐體驗。
+      </span>
     </div>
     <div class="w-full relative mt-60">
       <div class="w-full h-screen relative overflow-hidden">
-        <img ref="picDom" class="pic w-full h-[120%] object-cover absolute top-0 bottom-0 my-auto bg-red-900" src="../../assets/img/bg/JhuJian__story_bg.jpg" alt="meat" />
+        <img
+          ref="picDom"
+          class="pic w-full h-[120%] object-cover absolute top-0 bottom-0 my-auto bg-red-900"
+          src="../../assets/img/homePage/home_banner_bg.jpg"
+          alt="meat"
+        />
       </div>
       <div class="w-full absolute top-0 -translate-y-1/2">
         <div class="w-full">
-          <img class="w-full" src="../../assets/img/logo/JhuJian__story_logo.svg" alt="brandImg" />
+          <img class="w-full" src="../../assets/img/homePage/home_logo.svg" alt="brandImg" />
         </div>
         <div class="w-20 aspect-square absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:w-36">
-          <a class="moreLink w-full h-full rounded-full bg-black flex flex-col justify-center items-center relative z-10" href="#" @mousemove="mouseIn" @mouseleave="mouseOut">
+          <a
+            class="moreLink w-full h-full rounded-full bg-black flex flex-col justify-center items-center relative z-10"
+            href="#"
+            @mousemove="mouseIn"
+            @mouseleave="mouseOut"
+          >
             <span class="text-sm text-center pointer-events-none text-white md:text-xl">MORE</span>
             <span class="text-sm text-center pointer-events-none text-white md:text-xl">品牌故事</span>
           </a>
-          <div ref="LinkShadowDom" class="Shadow w-full h-full rounded-full absolute top-[10%] left-[10%] pointer-events-none bg-yellow-200 opacity-50"></div>
+          <div
+            ref="LinkShadowDom"
+            class="Shadow w-full h-full rounded-full absolute top-[10%] left-[10%] pointer-events-none bg-yellow-200 opacity-50"
+          ></div>
         </div>
       </div>
-      <div class="w-11/12 flex flex-col items-center absolute left-0 right-0 bottom-10 mx-auto border-b-[1px] md:flex-row md:justify-evenly pointer-events-none">
+      <div
+        class="w-11/12 flex flex-col items-center absolute left-0 right-0 bottom-10 mx-auto border-b-[1px] md:flex-row md:justify-evenly pointer-events-none"
+      >
         <div class="w-fit py-5 font-black text-center text-yellow-200">
           <span class="block text-5xl">13</span>
           <span class="block text-1xl mt-5">大品牌</span>

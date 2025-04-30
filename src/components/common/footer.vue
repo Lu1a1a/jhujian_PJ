@@ -24,16 +24,28 @@ onUnmounted(() => {
 </script>
 <template>
   <div class="w-full mt-20 px-10 xl:px-28">
-    <div class="w-1/4 aspect-square m-auto relative text-white cursor-pointer md:w-1/12 2xl:w-[6%]">
-      <div class="arrowTop block w-full aspect-square relative rounded-full bg-black z-20" @click="pageTop" @mousemove="mouseIn" @mouseleave="mouseOut">
-        <span class="material-symbols-outlined absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-4xl pointer-events-none lg:text-6xl 2xl:text-6xl">keyboard_arrow_up</span>
+    <div class="w-1/6 aspect-square m-auto relative text-white cursor-pointer md:w-1/12 2xl:w-[6%]">
+      <div
+        class="arrowTop block w-full aspect-square relative rounded-full bg-black z-20"
+        @click="pageTop"
+        @mousemove="mouseIn"
+        @mouseleave="mouseOut"
+      >
+        <span
+          class="material-symbols-outlined absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-4xl pointer-events-none lg:text-4xl md:text-5xl 2xl:text-6xl"
+        >
+          keyboard_arrow_up
+        </span>
       </div>
-      <span ref="TopShadowDom" class="Shadow w-full aspect-square rounded-full absolute top-2 left-2 bg-gray-400 z-10"></span>
+      <span
+        ref="TopShadowDom"
+        class="Shadow w-full aspect-square rounded-full absolute top-2 left-2 bg-gray-400 z-10"
+      ></span>
     </div>
     <div class="w-full mt-10 mb-7 relative lg:my-20">
-      <img class="w-full" src="../../assets/img/logo/jhujian_big_logo.png" alt="footerImg" />
+      <img class="w-full" src="../../assets/img/common/logo/jhujian_big_logo.png" alt="footerImg" />
       <div ref="logoImgDom" class="logoImg w-1/2 mt-10 mx-auto lg:absolute lg:bottom-0 lg:right-0 lg:w-1/4">
-        <img class="w-full h-full" src="../../assets/img/logo/JhuJian_xsm_logo.svg" alt="footerLogo" />
+        <img class="w-full h-full" src="../../assets/img/common/logo/JhuJian_xsm_logo.svg" alt="footerLogo" />
       </div>
     </div>
     <div class="w-full text-center md:flex md:items-center md:my-10">

@@ -9,7 +9,7 @@ provide("animateShow", animateShow);
 <template>
   <Transition name="animateTransition">
     <startAnimation v-if="animateShow" />
-    <div v-else class="w-full overflow-hidden bg-[url('./assets/img/bg/JhuJian_bg.jpg')]">
+    <div v-else class="w-full overflow-hidden bg-[url('./assets/img/common/bg/JhuJian_bg.jpg')]">
       <navigation />
       <RouterView v-slot="{ Component }">
         <Transition name="fade" mode="out-in">

@@ -21,11 +21,36 @@ onUnmounted(() => {
     </div>
     <div class="w-full mx-auto px-2 flex mb-10 md:w-2/3 xl:my-40 lg:w-4/5">
       <div class="w-full flex sm:justify-center overflow-x-scroll md:flex md:w-fit 2xl:mr-auto 2xl:justify-normal">
-        <RouterLink class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl 2xl:text-2xl 2xl:px-10" :to="{ path: '/home/allNews' }">所有訊息</RouterLink>
-        <RouterLink class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl lg:text-lg 2xl:text-2xl 2xl:px-10" :to="{ path: '/home/activity' }">活動資訊</RouterLink>
-        <RouterLink class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl lg:text-lg 2xl:text-2xl 2xl:px-10" :to="{ path: '/home/company' }">集團公告</RouterLink>
-        <RouterLink class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl lg:text-lg 2xl:text-2xl 2xl:px-10" :to="{ path: '/home/media' }">媒體報導</RouterLink>
-        <RouterLink class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl md:pr-[0px] lg:text-lg 2xl:text-2xl 2xl:px-10 2xl:pr-[0px]" :to="{ path: '/home/work' }">人才招募</RouterLink>
+        <RouterLink
+          class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl 2xl:text-2xl 2xl:px-10"
+          :to="{ path: '/home' }"
+        >
+          所有訊息
+        </RouterLink>
+        <RouterLink
+          class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl lg:text-lg 2xl:text-2xl 2xl:px-10"
+          :to="{ path: '/home/activity' }"
+        >
+          活動資訊
+        </RouterLink>
+        <RouterLink
+          class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl lg:text-lg 2xl:text-2xl 2xl:px-10"
+          :to="{ path: '/home/company' }"
+        >
+          集團公告
+        </RouterLink>
+        <RouterLink
+          class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl lg:text-lg 2xl:text-2xl 2xl:px-10"
+          :to="{ path: '/home/media' }"
+        >
+          媒體報導
+        </RouterLink>
+        <RouterLink
+          class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl md:pr-[0px] lg:text-lg 2xl:text-2xl 2xl:px-10 2xl:pr-[0px]"
+          :to="{ path: '/home/work' }"
+        >
+          人才招募
+        </RouterLink>
       </div>
       <span class="hidden relative items-center grow md:flex xl:grow-1">
         <span class="grow h-px bg-black mx-3"></span>
@@ -35,7 +60,7 @@ onUnmounted(() => {
         </span>
       </span>
     </div>
-    <div ref="carouselDom" class="carousel w-full relative ">
+    <div ref="carouselDom" class="carousel w-full relative">
       <router-view v-slot="{ Component }">
         <Transition name="fade" mode="out-in">
           <component :is="Component" />
@@ -63,7 +88,7 @@ onUnmounted(() => {
 ::-webkit-scrollbar {
   display: none;
 }
-.router-link-active {
+.router-link-exact-active {
   color: black;
 }
 .fade-enter-from,
