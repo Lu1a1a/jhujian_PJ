@@ -1,6 +1,6 @@
 <script setup lang="ts"></script>
 <template>
-  <div class="w-full">
+  <div id="brandGift" class="w-full">
     <div class="w-full">
       <div
         class="w-fit mx-auto relative z-10 after:w-full after:h-1/2 after:absolute after:bottom-0 after:right-0 after:-z-10 after:bg-yellow-300 after:opacity-50"

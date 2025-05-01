@@ -15,7 +15,7 @@ onMounted(() => {
 <template>
   <div class="w-full">
     <div
-      class="w-full h-[100vh] mb-20 flex justify-center relative items-center text-white lg:h-[70vh] md:h-[50vh] md:mb-32"
+      class="w-full h-[100vh] mb-5 flex justify-center relative items-center text-white lg:h-[70vh] md:h-[50vh] md:mb-10"
     >
       <img src="../assets/img/memberPage/member_banner_bg.jpg" class="w-full h-full brightness-50 object-cover" />
       <div class="w-4/5 mx-auto absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] lg:w-2/3">
@@ -34,6 +34,13 @@ onMounted(() => {
           誠摯地邀請您加入我們，成為築間的一份子！
         </div>
       </div>
+    </div>
+    <div class="w-full mb-20 flex justify-center md:mb-32">
+      <RouterLink to="#memberGift" class="w-fit px-5 md:text-xl md:px-12">會員好禮</RouterLink>
+      <RouterLink to="#brandGift" class="w-fit px-5 border-x-2 border-gray-300 md:text-xl md:px-12">
+        會員權益
+      </RouterLink>
+      <RouterLink to="#memberLogin" class="w-fit px-5 md:text-xl md:px-12">加入會員</RouterLink>
     </div>
     <memberGift />
     <brandGift />
