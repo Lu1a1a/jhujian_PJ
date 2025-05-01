@@ -41,7 +41,7 @@ onUnmounted(() => {
         </RouterLink>
         <RouterLink
           class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl lg:text-lg 2xl:text-2xl 2xl:px-10"
-          :to="{ path: '/home/media' }"
+          :to="{ path: '/home/mediaNews' }"
         >
           媒體報導
         </RouterLink>

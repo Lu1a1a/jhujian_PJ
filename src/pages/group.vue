@@ -12,12 +12,12 @@ onMounted(() => {
 <template>
   <div class="w-full">
     <div
-      class="w-full h-[100vh] mb-20 flex justify-center relative items-center text-white lg:h-[90vh] md:h-[70vh] md:mb-48"
+      class="w-full h-[100vh] mb-20 flex justify-center relative items-center text-white lg:h-[70vh] md:h-[50vh] md:mb-48"
     >
       <img src="../assets/img/groupPage/group_banner_bg.jpg" class="w-full h-full brightness-75 object-cover" />
       <div class="w-4/5 mx-auto absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] lg:w-2/3">
         <div
-          class="w-fit text-4xl font-thin relative z-10 lg:text-5xl after:w-1/2 after:h-1/2 after:absolute after:bottom-0 after:right-0 after:-z-10 after:bg-yellow-200 after:contrast-50"
+          class="w-fit text-4xl font-thin relative z-10 lg:text-5xl after:w-1/2 after:h-1/2 after:absolute after:bottom-0 after:right-0 after:-z-10 after:bg-yellow-300 after:opacity-50"
         >
           關於集團
         </div>
