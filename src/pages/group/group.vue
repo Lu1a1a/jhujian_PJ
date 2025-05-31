@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
-import { usePageCheckStore } from "../store/usePageCheck";
-import pageFooter from "../components/common/footer.vue";
+import { usePageCheckStore } from "../../store/usePageCheck";
+import pageFooter from "../../components/common/footer.vue";
 
 const pageCheckStore = usePageCheckStore();
 const { checkRoute } = pageCheckStore;

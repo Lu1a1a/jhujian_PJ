@@ -1,7 +1,7 @@
-console.log("main");
 import { createApp } from "vue";
 import "normalize.css";
 import "../style/style.css";
+import "@vuepic/vue-datepicker/dist/main.css";
 import App from "../App.vue";
 import { createPinia } from "pinia";
 import { setRouter } from "../router/index.ts";

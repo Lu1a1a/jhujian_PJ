@@ -128,7 +128,6 @@ const watchStop = watch(scrollY, (newY, oldY) => {
   }
   showNav.value = true;
 });
-
 const goPosition = () => {
   router.push({ path: "/position", query: { name: "築間幸福鍋物" } });
 };
@@ -213,7 +212,7 @@ onUnmounted(() => {
               <span class="w-fit material-symbols-outlined cursor-pointer lg:text-3xl">pin_drop</span>
               <span class="hidden md:block lg:text-lg">餐廳位置</span>
             </div>
-            <div v-else class="flex items-center gap-2" @click="goHome">
+            <div v-else class="flex items-center gap-2" :class="{ 'text-white': isNavBgTransparent }" @click="goHome">
               <span class="material-symbols-outlined lg:text-3xl">home</span>
               <span class="hidden md:block lg:text-lg">返回首頁</span>
             </div>
@@ -230,7 +229,7 @@ onUnmounted(() => {
               <span class="material-symbols-outlined lg:text-3xl">local_dining</span>
               <span class="hidden md:block lg:text-lg">立即訂位</span>
             </div>
-            <div v-else class="flex items-center gap-2" @click="goHome">
+            <div v-else class="flex items-center gap-2" :class="{ 'text-white': isNavBgTransparent }" @click="goHome">
               <span class="material-symbols-outlined lg:text-3xl">home</span>
               <span class="hidden md:block lg:text-lg">返回首頁</span>
             </div>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { useRoute, onBeforeRouteUpdate } from "vue-router";
-import { usePageCheckStore } from "../store/usePageCheck";
-import pageFooter from "../components/common/footer.vue";
+import { usePageCheckStore } from "../../store/usePageCheck";
+import pageFooter from "../../components/common/footer.vue";
 const pageCheckStore = usePageCheckStore();
 const { checkRoute } = pageCheckStore;
 const titleSw = ref(true);
@@ -139,7 +139,7 @@ onBeforeRouteUpdate((to) => {
 });
 
 onMounted(() => {
-  checkRoute()
+  checkRoute();
   filterIcon = data.value.filter((item) => {
     return item.name === route.query.name;
   });
@@ -151,13 +151,17 @@ onMounted(() => {
 <template>
   <div class="w-full">
     <div class="w-full h-screen relative">
-    <div class="w-full aspect-square absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] mx-auto lg:w-4/5 lg:h-4/5">
-      <div class="w-full mb-5 flex gap-3 justify-center items-center">
-        <img class="w-11 lg:w-14 2xl:w-20" :src="logoIcon" />
-        <div v-show="titleSw" class="font-bold text-center tracking-widest text-xl 2xl:text-4xl">{{ route.query.name }}據點</div>
+      <div
+        class="w-full aspect-square absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] mx-auto lg:w-4/5 lg:h-4/5"
+      >
+        <div class="w-full mb-5 flex gap-3 justify-center items-center">
+          <img class="w-11 lg:w-14 2xl:w-20" :src="logoIcon" />
+          <div v-show="titleSw" class="font-bold text-center tracking-widest text-xl 2xl:text-4xl">
+            {{ route.query.name }}據點
+          </div>
+        </div>
+        <div id="map" class="h-full"></div>
       </div>
-      <div id="map" class="h-full"></div>
-    </div>
     </div>
     <pageFooter />
   </div>

@@ -1,4 +1,3 @@
-import { TBookingDetail } from "../type/TBookingDetail.ts";
 export const useWebStorage = () => {
   const localStorageMethod = {
     localSet(key: string, value: string | object) {
@@ -8,7 +7,7 @@ export const useWebStorage = () => {
       }
       localStorage.setItem(key, value as string);
     },
-    localGet(key: string): TBookingDetail | string {
+    localGet(key: string) {
       let keyContent = localStorage.getItem(key) as string;
       if (keyContent === null) {
         return keyContent;

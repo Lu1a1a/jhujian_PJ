@@ -1,11 +1,16 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+import { storeToRefs } from "pinia";
 import { useCheckNavBgStore } from "../store/useCheckNavBg";
-import home from "../pages/home.vue";
-import booking from "../pages/booking.vue";
-import position from "../pages/position.vue";
-import group from "../pages/group.vue";
-import news from "../pages/news.vue";
-import member from "../pages/member.vue";
+import { useAuthMemberStore } from "../store/useAuthMember";
+import home from "../pages/home/home.vue";
+import booking from "../pages/booking/booking.vue";
+import position from "../pages/position/position.vue";
+import group from "../pages/group/group.vue";
+import memberCenter from "../pages/member/memberCenter.vue";
+import memberAuth from "../pages/member/memberAuth.vue";
+import register from "../pages/member/register.vue";
+import login from "../pages/member/login.vue";
+import news from "../pages/newsCarousel/news.vue";
 import allNewsCarousel from "../pages/newsCarousel/allNews.vue";
 import activityCarousel from "../pages/newsCarousel/activity.vue";
 import companyCarousel from "../pages/newsCarousel/company.vue";
@@ -16,6 +21,7 @@ import event from "../pages/news//event.vue";
 import media from "../pages/news/media.vue";
 import announcement from "../pages/news/announcement.vue";
 import recruiting from "../pages/news/recruiting.vue";
+import notFoundPage from "../pages/notFoundPage.vue";
 
 export const setRouter = () => {
   const router = createRouter({
@@ -104,7 +110,38 @@ export const setRouter = () => {
       {
         name: "member",
         path: "/member",
-        component: member,
+        component: memberCenter,
+        beforeEnter: (to, from, next) => {
+          const AuthMemberStore = useAuthMemberStore();
+          const { isLogin } = storeToRefs(AuthMemberStore);
+          if (isLogin.value === false) {
+            next({ path: "/member/auth/login" });
+            return;
+          }
+          next();
+        },
+      },
+      {
+        name: "memberAuth",
+        path: "/member/auth",
+        component: memberAuth,
+        children: [
+          {
+            name: "register",
+            path: "register",
+            component: register,
+          },
+          {
+            name: "login",
+            path: "login",
+            component: login,
+          },
+        ],
+      },
+      {
+        name: "notFound",
+        path: "/:pathMatch(.*)*",
+        component: notFoundPage,
       },
     ],
     scrollBehavior(to) {
@@ -119,8 +156,6 @@ export const setRouter = () => {
   router.beforeEach((to) => {
     const checkNavBgStore = useCheckNavBgStore();
     const { setNavBgState, checkOpacityNavPage } = checkNavBgStore;
-    console.log(to);
-
     if (
       to.name === "allNewsC" ||
       to.name === "allNews" ||
@@ -132,7 +167,9 @@ export const setRouter = () => {
       to.name === "position" ||
       to.name === "event" ||
       to.name === "announcement" ||
-      to.name === "recruiting"
+      to.name === "recruiting" ||
+      to.name === "login" ||
+      to.name === "register"
     ) {
       checkOpacityNavPage(false);
       setNavBgState(false);
