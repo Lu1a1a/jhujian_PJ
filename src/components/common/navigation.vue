@@ -191,7 +191,7 @@ onUnmounted(() => {
 <template>
   <nav
     ref="mainNav"
-    class="w-full py-5 fixed z-10 transition-all duration-300"
+    class="w-full py-5 fixed z-50 transition-all duration-300"
     :class="{ 'translate-y-[-100%]': !showNav }"
   >
     <img

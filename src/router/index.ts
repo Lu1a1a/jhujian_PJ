@@ -112,8 +112,8 @@ export const setRouter = () => {
         path: "/member",
         component: memberCenter,
         beforeEnter: (to, from, next) => {
-          const AuthMemberStore = useAuthMemberStore();
-          const { isLogin } = storeToRefs(AuthMemberStore);
+          const authMemberStore = useAuthMemberStore();
+          const { isLogin } = storeToRefs(authMemberStore);
           if (isLogin.value === false) {
             next({ path: "/member/auth/login" });
             return;

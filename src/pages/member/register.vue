@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import axios, { AxiosError } from "axios";
+import { TResError } from "../../type/TResponseError.ts";
 import { ref } from "vue";
 import { firstNameAuth, lastNameAuth, telAuth, mailAuth, passwordAuth } from "../../composables/useFormAuth.ts";
 const pwdShow = ref(false);
@@ -13,40 +15,88 @@ const mail = ref("");
 const mailState = ref(true);
 const password = ref("");
 const passwordState = ref(true);
+const popUpShow = ref(false);
+const popUpMessage = ref("");
 const togglePwdShow = () => {
   pwdShow.value = !pwdShow.value;
   pwdType.value = pwdShow.value ? "text" : "password";
 };
-const registerAuth = () => {
-  authFirstName();
-  authLastName();
-  authTel();
-  authMail();
-  authPassword();
+const registerAuth = async () => {
+  FirstNameAuth();
+  LastNameAuth();
+  TelAuth();
+  MailAuth();
+  PasswordAuth();
   if (!firstNameState.value || !lastNameState.value || !telState.value || !mailState.value || !passwordState.value)
     return;
+  try {
+    const { data } = await axios({
+      method: "post",
+      baseURL: "http://localhost:8000/",
+      url: "/member/register",
+      data: {
+        firstName: firstName.value,
+        lastName: lastName.value,
+        phone: Number(tel.value),
+        mail: mail.value,
+        password: password.value,
+      },
+    });
+    if ((data.success = true)) {
+      popUpShow.value = true;
+      popUpMessage.value = "註冊成功";
+      firstName.value = "";
+      lastName.value = "";
+      tel.value = "";
+      mail.value = "";
+      password.value = "";
+    }
+  } catch (error) {
+    const err = error as AxiosError<TResError>;
+    popUpShow.value = true;
+    if (err.response?.data.data.duplicate_value) {
+      const errMsg = err.response?.data.data.duplicate_value as string[];
+      if (errMsg.includes("tel")) {
+        tel.value = "";
+        telState.value = false;
+        popUpMessage.value = "電話號碼已註冊";
+        return;
+      }
+      if (errMsg.includes("mail")) {
+        mail.value = "";
+        mailState.value = false;
+        popUpMessage.value = "信箱已註冊";
+        return;
+      }
+      return;
+    }
+    popUpMessage.value = "伺服器忙碌中，稍後再試";
+  }
 };
-const authFirstName = () => {
+const FirstNameAuth = () => {
   firstNameState.value = firstNameAuth(firstName.value);
 };
-const authLastName = () => {
+const LastNameAuth = () => {
   lastNameState.value = lastNameAuth(lastName.value);
 };
-const authTel = () => {
+const TelAuth = () => {
   telState.value = telAuth(Number(tel.value));
 };
-const authMail = () => {
+const MailAuth = () => {
   mailState.value = mailAuth(mail.value);
 };
-const authPassword = () => {
+const PasswordAuth = () => {
   passwordState.value = passwordAuth(password.value);
+};
+const closePopUp = () => {
+  popUpShow.value = !popUpShow.value;
 };
 </script>
 <template>
   <div class="w-full">
     <div class="max-w-xl mx-auto">
       <div
-        class="w-fit my-2 relative z-10 font-medium after:w-full after:h-1/2 after:absolute after:bottom-0 after:right-0 after:-z-10 after:bg-yellow-300 after:opacity-50"
+        class="w-fit my-2 relative z-[5] font-medium after:w-full after:h-1/2 after:absolute after:bottom-0 after:right-0 after:-z-10 after:bg-yellow-300 after:opacity-50"
       >
         Become Our Member
       </div>
@@ -62,7 +112,7 @@ const authPassword = () => {
           v-model="firstName"
           class="w-full px-2 py-1 mt-1 rounded-lg outline-none md:py-2"
           :class="{ 'outline-1 outline-red-500': !firstNameState }"
-          @input="authFirstName"
+          @input="FirstNameAuth"
         />
         <span
           class="absolute left-0 top-full text-red-500"
@@ -81,7 +131,7 @@ const authPassword = () => {
           v-model="lastName"
           class="w-full px-2 py-1 mt-1 rounded-lg outline-none md:py-2"
           :class="{ 'outline-1 outline-red-500': !lastNameState }"
-          @input="authLastName"
+          @input="LastNameAuth"
         />
         <span
           class="absolute left-0 top-full text-red-500"
@@ -102,7 +152,7 @@ const authPassword = () => {
         maxlength="10"
         class="block w-full px-2 py-1 mt-1 rounded-lg outline-none md:py-2"
         :class="{ 'outline-1 outline-red-500': !telState }"
-        @input="authTel"
+        @input="TelAuth"
       />
       <span
         class="absolute left-0 top-full text-red-500"
@@ -121,7 +171,7 @@ const authPassword = () => {
         v-model="mail"
         class="block w-full px-2 py-1 mt-1 rounded-lg outline-none md:py-2"
         :class="{ 'outline-1 outline-red-500': !mailState }"
-        @input="authMail"
+        @input="MailAuth"
       />
       <span
         class="absolute left-0 top-full text-red-500"
@@ -141,7 +191,7 @@ const authPassword = () => {
         v-model="password"
         class="block w-full px-2 py-1 mt-1 rounded-lg outline-none md:py-2"
         :class="{ 'outline-1 outline-red-500': !passwordState }"
-        @input="authPassword"
+        @input="PasswordAuth"
       />
       <span
         class="absolute left-0 top-full text-red-500"
@@ -151,7 +201,6 @@ const authPassword = () => {
       >
         請輸入8到15字的英、數密碼
       </span>
-
       <div class="w-fit absolute right-2 bottom-0 cursor-pointer" @click="togglePwdShow">
         <span v-if="pwdShow" class="material-symbols-outlined">visibility</span>
         <span v-else class="material-symbols-outlined">visibility_off</span>
@@ -163,6 +212,19 @@ const authPassword = () => {
         @click="registerAuth"
       >
         加入會員 JOIN
+      </button>
+    </div>
+    <div v-show="popUpShow" class="w-screen h-screen fixed z-30 top-0 left-0 bg-slate-600/35">
+      <div
+        class="w-2/3 py-6 absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] bg-white rounded-lg text-center lg:text-xl lg:w-1/2 xl:w-2/5 xl:text-2xl"
+      >
+        {{ popUpMessage }}
+      </div>
+      <button
+        class="w-2/5 py-2 absolute bottom-1/4 left-1/2 translate-x-[-50%] bg-white rounded-full text-center lg:w-1/5 lg:text-xl xl:text-2xl hover:bg-black hover:text-white transition-all"
+        @click="closePopUp"
+      >
+        關閉
       </button>
     </div>
   </div>
