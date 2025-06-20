@@ -28,7 +28,7 @@ const signOut = () => {
   popUpShow.value = true;
   popUpMessage.value = "登出成功，5秒後自動跳轉";
   setTimeout(() => {
-    router.push({ path: "/home" });
+    router.push({ path: "/home/allNews" });
   }, 5000);
 };
 onMounted(() => {
@@ -62,6 +62,7 @@ onMounted(() => {
       <div class="w-full mb-10 flex justify-center divide-x-2 divide-gray-300 md:mb-16">
         <RouterLink to="#memberGift" class="w-fit px-5 md:text-xl md:px-12">會員好禮</RouterLink>
         <RouterLink to="#brandGift" class="w-fit px-5 md:text-xl md:px-12">會員權益</RouterLink>
+        <span class="w-fit px-5 cursor-pointer md:text-xl md:px-12">目前訂位</span>
         <span class="w-fit px-5 text-red-500 cursor-pointer hover:text-red-800 md:text-xl md:px-12" @click="popUpOpen">
           登出
         </span>

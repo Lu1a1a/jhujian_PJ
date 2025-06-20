@@ -46,6 +46,7 @@ const loginAuth = async () => {
     }, 5000);
   } catch (error) {
     const err = error as AxiosError<TResError>;
+    console.log(err.response?.data);
     if (err.response?.data.msg === "member not found") {
       popUpMessage.value = "無會員資料，請輸入正確的電話號碼";
       tel.value = "";
@@ -60,7 +61,7 @@ const loginAuth = async () => {
   }
 };
 const TelAuth = () => {
-  telState.value = telAuth(Number(tel.value));
+  telState.value = telAuth(tel.value);
 };
 const PasswordAuth = () => {
   passwordState.value = passwordAuth(password.value);

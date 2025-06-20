@@ -3,15 +3,20 @@ import { ref, onMounted, provide } from "vue";
 import startAnimation from "./components/animation/startAnimation.vue";
 import navigation from "./components/common/navigation.vue";
 import { useAuthMemberStore } from "./store/useAuthMember.ts";
+import { useCarouselImg } from "./store/useCarouselImg.ts";
 const authMemberStore = useAuthMemberStore();
+const carouselImg = useCarouselImg();
 const { setLoginState } = authMemberStore;
+const { setCarouselImg } = carouselImg;
 const animateShow = ref(true);
 provide("animateShow", animateShow);
+
 onMounted(() => {
   const token = localStorage.getItem("login_token");
   if (token !== null) {
     setLoginState(token);
   }
+  setCarouselImg();
 });
 </script>
 

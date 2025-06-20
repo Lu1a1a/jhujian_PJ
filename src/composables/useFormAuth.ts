@@ -16,7 +16,7 @@ const lastNameAuth = (name: string) => {
   }
   return false;
 };
-const telAuth = (tel: number) => {
+const telAuth = (tel: string) => {
   if (telRule.test(tel.toString())) {
     return true;
   }

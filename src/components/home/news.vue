@@ -23,33 +23,27 @@ onUnmounted(() => {
       <div class="w-full flex sm:justify-center overflow-x-scroll md:flex md:w-fit 2xl:mr-auto 2xl:justify-normal">
         <RouterLink
           class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl 2xl:text-2xl 2xl:px-10"
-          :to="{ path: '/home' }"
+          :to="{ path: '/home/allNews' }"
         >
           所有訊息
         </RouterLink>
         <RouterLink
           class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl lg:text-lg 2xl:text-2xl 2xl:px-10"
-          :to="{ path: '/home/activity' }"
+          :to="{ path: '/home/event' }"
         >
           活動資訊
         </RouterLink>
         <RouterLink
           class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl lg:text-lg 2xl:text-2xl 2xl:px-10"
-          :to="{ path: '/home/company' }"
+          :to="{ path: '/home/announcement' }"
         >
           集團公告
         </RouterLink>
         <RouterLink
           class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl lg:text-lg 2xl:text-2xl 2xl:px-10"
-          :to="{ path: '/home/mediaNews' }"
+          :to="{ path: '/home/media' }"
         >
           媒體報導
-        </RouterLink>
-        <RouterLink
-          class="navLink w-fit shrink-0 px-5 relative text-gray-400 md:text-xl md:pr-[0px] lg:text-lg 2xl:text-2xl 2xl:px-10 2xl:pr-[0px]"
-          :to="{ path: '/home/work' }"
-        >
-          人才招募
         </RouterLink>
       </div>
       <span class="hidden relative items-center grow md:flex xl:grow-1">

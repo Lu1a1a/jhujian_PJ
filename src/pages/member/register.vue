@@ -2,6 +2,9 @@
 import axios, { AxiosError } from "axios";
 import { TResError } from "../../type/TResponseError.ts";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
+import { useAuthMemberStore } from "../../store/useAuthMember.ts";
 import { firstNameAuth, lastNameAuth, telAuth, mailAuth, passwordAuth } from "../../composables/useFormAuth.ts";
 const pwdShow = ref(false);
 const pwdType = ref("password");
@@ -17,6 +20,10 @@ const password = ref("");
 const passwordState = ref(true);
 const popUpShow = ref(false);
 const popUpMessage = ref("");
+const router = useRouter();
+const authMemberStore = useAuthMemberStore();
+const { setLoginState } = authMemberStore;
+const { memberInfo } = storeToRefs(authMemberStore);
 const togglePwdShow = () => {
   pwdShow.value = !pwdShow.value;
   pwdType.value = pwdShow.value ? "text" : "password";
@@ -43,13 +50,32 @@ const registerAuth = async () => {
       },
     });
     if ((data.success = true)) {
-      popUpShow.value = true;
-      popUpMessage.value = "註冊成功";
-      firstName.value = "";
-      lastName.value = "";
-      tel.value = "";
-      mail.value = "";
-      password.value = "";
+      try {
+        const { data } = await axios({
+          method: "post",
+          baseURL: "http://localhost:8000/",
+          url: "/member/login",
+          data: {
+            phone: tel.value,
+            password: password.value,
+          },
+        });
+        popUpShow.value = true;
+        popUpMessage.value = "註冊成功，5秒後自動跳轉";
+        setLoginState(data.data.token);
+        memberInfo.value = data.data.memberInfo;
+        setTimeout(() => {
+          router.push({ path: "/member" });
+        }, 5000);
+        firstName.value = "";
+        lastName.value = "";
+        tel.value = "";
+        mail.value = "";
+        password.value = "";
+      } catch (error) {
+        const err = error as AxiosError<TResError>;
+        console.log(err);
+      }
     }
   } catch (error) {
     const err = error as AxiosError<TResError>;
@@ -80,7 +106,7 @@ const LastNameAuth = () => {
   lastNameState.value = lastNameAuth(lastName.value);
 };
 const TelAuth = () => {
-  telState.value = telAuth(Number(tel.value));
+  telState.value = telAuth(tel.value);
 };
 const MailAuth = () => {
   mailState.value = mailAuth(mail.value);

@@ -3,58 +3,65 @@ import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Autoplay } from "swiper/modules";
 import { ref } from "vue";
+import { storeToRefs } from "pinia";
+import { useCarouselImg } from "../../store/useCarouselImg.ts";
+const carouselImg = useCarouselImg();
 const modules = ref([Navigation, Autoplay]);
 const navigation = ref({
   nextEl: ".swiper-button-next",
   prevEl: ".swiper-button-prev",
 });
 const swiperBreakPoint = {
-  640: { slidesPerView: 3, spaceBetween: 10, centeredSlides: true },
-  768: { slidesPerView: 3, spaceBetween: 50, centeredSlides: true },
-  1280: { slidesPerView: 3, spaceBetween: 50, centeredSlides: true },
-  1536: { slidesPerView: 3, spaceBetween: 100, centeredSlides: true },
+  768: { slidesPerView: 3, spaceBetween: 0, centeredSlides: true },
 };
+const { carouselImgArr } = storeToRefs(carouselImg);
+
+const newCarouselImg = carouselImgArr.value.filter((item: any) => {
+  const { 2: type } = item.path.split("/");
+  return type === "newsCarousel";
+});
+
 const data = ref([
   {
-    img: new URL("../../assets/newsImg/3_20241204111217ic7yt0qbp1.jpg", import.meta.url).href,
+    img: `../../assets/img${newCarouselImg[0].path}`,
     title: "月神的烤驗",
     date: "2024/08/25",
   },
   {
-    img: new URL("../../assets/newsImg/3_20241204111217ic7yt0qbp1.jpg", import.meta.url).href,
+    img: `../../assets/img${newCarouselImg[3].path}`,
     title: "會吃仲夏GOLD月神的烤驗",
     date: "2024/08/26",
   },
   {
-    img: new URL("../../assets/newsImg/3_20241204111217ic7yt0qbp1.jpg", import.meta.url).href,
+    img: `../../assets/img${newCarouselImg[0].path}`,
     title: "仲夏GOLD會吃",
     date: "2024/08/27",
   },
   {
-    img: new URL("../../assets/newsImg/3_20241204111217ic7yt0qbp1.jpg", import.meta.url).href,
+    img: `../../assets/img${newCarouselImg[7].path}`,
     title: "百萬會員祭 大口吃金幣",
     date: "2024/08/28",
   },
 ]);
 </script>
 <template>
-   <div class="w-full relative">
+  <div class="w-full relative">
     <swiper
       :autoplay="{
         delay: 5000,
         disableOnInteraction: false,
       }"
-      :loop="true"
-      :navigation="navigation"
       :modules="modules"
+      :loop="true"
+      :speed="2000"
+      :navigation="navigation"
       :slides-per-view="2"
-      :space-between="30"
       :breakpoints="swiperBreakPoint"
     >
       <swiper-slide v-for="item in data" :key="item.img">
         <div class="w-full h-full flex flex-col">
-          <div class="w-full">
-            <img class="w-full" :src="item.img" alt="workImg" />
+          <div class="w-full aspect-square">
+            <img class="w-full h-full object-cover" :src="item.img" alt="allNewsImg" />
           </div>
           <div class="grow flex flex-col md:text-2xl">
             <span class="w-full grow">{{ item.title }}</span>
@@ -86,10 +93,12 @@ const data = ref([
 }
 .swiper-slide {
   width: 30% !important;
+  margin: 0 2%;
 }
 @media screen and (max-width: 768px) {
   .swiper-slide {
     width: 45% !important;
+    margin: 0 2.5%;
   }
   .swiper-button-prev {
     left: 2%;

@@ -25,7 +25,7 @@ onMounted(() => {
       </div>
       <div class="w-full mt-5 flex overflow-scroll sm:justify-center md:mt-16">
         <div class="w-fit h-fit px-5 flex-shrink-0 border-l-black text-sm text-gray-500 md:px-8 md:text-lg">
-          <RouterLink :to="{ path: '/news' }">All所有訊息</RouterLink>
+          <RouterLink :to="{ path: '/news/allNews' }">All所有訊息</RouterLink>
         </div>
         <div class="w-fit h-fit px-5 flex-shrink-0 border-l-black border-l text-sm text-gray-500 md:px-8 md:text-lg">
           <RouterLink :to="{ path: '/news/event' }">活動資訊</RouterLink>

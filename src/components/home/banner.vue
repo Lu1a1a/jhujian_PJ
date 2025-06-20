@@ -49,7 +49,7 @@ onMounted(() => {
           </li>
           <li class="w-fit px-5 relative">
             <RouterLink
-              :to="{ path: '/news' }"
+              :to="{ path: '/news/allNews' }"
               class="block relative after:w-full after:h-1/2 after:bg-yellow-300 after:opacity-50 after:absolute after:bottom-0 after:left-0 after:-z-10 after:scale-x-0 after:transition after:duration-500 after:origin-right hover:after:scale-x-100 hover:after:origin-left text-sm font-medium md:text-2xl"
             >
               NEWS 新訊
@@ -72,7 +72,7 @@ onMounted(() => {
           delay: 5000,
           disableOnInteraction: false,
         }"
-        :speed="1000"
+        :speed="2000"
         :modules="modules"
         :loop="true"
         :slides-per-view="1"
@@ -82,27 +82,47 @@ onMounted(() => {
       >
         <swiper-slide class="transition">
           <div class="m-auto">
-            <img class="w-full object-cover" src="../../assets/img/banerImg/3_202405101410374pw0avSTl1.jpg" alt="" />
+            <img
+              class="w-full object-cover"
+              src="../../assets/img/homePage/bannerCarousel/banner01.jpg"
+              alt="bannerImg01"
+            />
           </div>
         </swiper-slide>
         <swiper-slide class="transition">
           <div class="m-auto">
-            <img class="w-full object-cover" src="../../assets/img/banerImg/3_20231229181631r3zihnNUv0.jpg" alt="" />
+            <img
+              class="w-full object-cover"
+              src="../../assets/img/homePage/bannerCarousel/banner02.jpg"
+              alt="bannerImg02"
+            />
           </div>
         </swiper-slide>
         <swiper-slide class="transition">
           <div class="m-auto">
-            <img class="w-full object-cover" src="../../assets/img/banerImg/3_202405101405116sf4josbY0.jpg" alt="" />
+            <img
+              class="w-full object-cover"
+              src="../../assets/img/homePage/bannerCarousel/banner03.jpg"
+              alt="bannerImg03"
+            />
           </div>
         </swiper-slide>
         <swiper-slide class="transition">
           <div class="m-auto">
-            <img class="w-full object-cover" src="../../assets/img/banerImg/3_202405101410374pw0avSTl1.jpg" alt="" />
+            <img
+              class="w-full object-cover"
+              src="../../assets/img/homePage/bannerCarousel/banner01.jpg"
+              alt="bannerImg04"
+            />
           </div>
         </swiper-slide>
         <swiper-slide class="transition">
           <div class="m-auto">
-            <img class="w-full object-cover" src="../../assets/img/banerImg/3_20231229181631r3zihnNUv0.jpg" alt="" />
+            <img
+              class="w-full object-cover"
+              src="../../assets/img/homePage/bannerCarousel/banner02.jpg"
+              alt="bannerImg05"
+            />
           </div>
         </swiper-slide>
         <div class="swiper-option-point w-full mt-5 flex justify-center gap-5 md:hidden"></div>
@@ -134,6 +154,9 @@ onMounted(() => {
 }
 .swiper {
   overflow: visible;
+}
+.swiper-slide {
+  transition: transform 1s;
 }
 .swiper-slide-active {
   transform: translateY(0);

@@ -4,6 +4,9 @@ import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { usePageCheckStore } from "../../store/usePageCheck";
 import { useCheckNavBgStore } from "../../store/useCheckNavBg";
+import { useCarouselImg } from "../../store/useCarouselImg.ts";
+const carouselImg = useCarouselImg();
+const { carouselImgArr } = storeToRefs(carouselImg);
 const brandList = [
   "築間幸福鍋物",
   "燒肉smile",
@@ -12,10 +15,12 @@ const brandList = [
   "絵馬別邸",
   "築間酸菜魚",
   "紫木槿韓國烤肉",
+  "紫木槿韓餐酒館",
   "築間麻辣火鍋",
   "築間台灣鹽酥雞",
   "芡芳石頭火鍋",
   "朴庶韓國銅盤烤肉",
+  "朴庶韓國烤肉公社",
 ];
 const brandShow = ref<boolean>(false);
 const scrollY = ref(0);
@@ -29,76 +34,62 @@ const { isPosition, isBooking } = storeToRefs(pageCheckStore);
 const { isTransparentPage, isNavBgTransparent } = storeToRefs(NavBgStateStore);
 const { setNavBgState } = NavBgStateStore;
 const router = useRouter();
+const brandIconImg = carouselImgArr.value.filter((item: any) => {
+  const { 2: type, 3: folder } = item.path.split("/");
+  return type === "brandCarousel" && folder === "brandIcon";
+});
 const data = ref([
   {
-    icon: new URL("../../assets/companyImg/3_20231219150840oktl6ywAh0.jpg", import.meta.url).href,
-    img: new URL("../../assets/companyImg/hoverImg/3_202312141600232q11ec8kJ0.jpg", import.meta.url).href,
-    name: "築間幸福鍋物",
+    icon: `../../assets/img${brandIconImg[0].path}`,
+    name: "芡芳石頭火鍋",
   },
   {
-    icon: new URL("../../assets/companyImg/3_20231219151249qwfwqwpUE0.jpg", import.meta.url).href,
-    img: new URL("../../assets/companyImg/hoverImg/3_2023121416101264v7o8xR94.jpg", import.meta.url).href,
-    name: "燒肉smile",
-  },
-  {
-    icon: new URL("../../assets/companyImg/3_20231219151525koe6jjJOG1.jpg", import.meta.url).href,
-    img: new URL("../../assets/companyImg/hoverImg/3_20231214161548k7bc80KkT6.jpg", import.meta.url).href,
-    name: "有之和牛",
-  },
-  {
-    icon: new URL("../../assets/companyImg/3_202312191517122jqvu4g2z2.jpg", import.meta.url).href,
-    img: new URL("../../assets/companyImg/hoverImg/3_20231214162200gsmaukIZr8.jpg", import.meta.url).href,
-    name: "本格燒肉",
-  },
-  {
-    icon: new URL("../../assets/companyImg/3_20231219193822c5gamcWnZ0.jpg", import.meta.url).href,
-    img: new URL("../../assets/companyImg/hoverImg/3_202312141631255wvo85cqV11.jpg", import.meta.url).href,
-    name: "築間酸菜魚",
-  },
-  {
-    icon: new URL("../../assets/companyImg/3_202409131151209ipcu7STK3.jpg", import.meta.url).href,
-    img: new URL("../../assets/companyImg/hoverImg/3_202312141631255wvo85cqV11.jpg", import.meta.url).href,
-    name: "紫木槿韓餐酒館",
-  },
-  {
-    icon: new URL("../../assets/companyImg/3_202312191950595n7k6aYwP2.jpg", import.meta.url).href,
-    img: new URL("../../assets/companyImg/hoverImg/3_202312141600232q11ec8kJ0.jpg", import.meta.url).href,
-    name: "紫木槿韓國烤肉",
-  },
-  {
-    icon: new URL("../../assets/companyImg/3_20240105111611zf6g89WEp0.jpg", import.meta.url).href,
-    img: new URL("../../assets/companyImg/hoverImg/3_20231219194216cbjy3khMQ1.jpg", import.meta.url).href,
+    icon: `../../assets/img${brandIconImg[1].path}`,
     name: "絵馬別邸",
   },
   {
-    icon: new URL("../../assets/companyImg/3_202404161644191qucssBGv0.jpg", import.meta.url).href,
-    img: new URL("../../assets/companyImg/hoverImg/3_202312141631255wvo85cqV11.jpg", import.meta.url).href,
-    name: "築間麻辣火鍋",
+    icon: `../../assets/img${brandIconImg[2].path}`,
+    name: "本格燒肉",
   },
   {
-    icon: new URL("../../assets/companyImg/3_20240726110350fxx27qKAX2.png", import.meta.url).href,
-    img: new URL("../../assets/companyImg/hoverImg/3_20231219195528hmcttpg8g3.jpg", import.meta.url).href,
-    name: "築間燒肉本命",
+    icon: `../../assets/img${brandIconImg[3].path}`,
+    name: "燒肉本命",
   },
   {
-    icon: new URL("../../assets/companyImg/3_202407261128174vj74vY2y7.png", import.meta.url).href,
-    img: new URL("../../assets/companyImg/hoverImg/3_202312141631255wvo85cqV11.jpg", import.meta.url).href,
+    icon: `../../assets/img${brandIconImg[4].path}`,
     name: "築間台灣鹽酥雞",
   },
   {
-    icon: new URL("../../assets/companyImg/3_20240918134734ygfkvqgqH0.png", import.meta.url).href,
-    img: new URL("../../assets/companyImg/hoverImg/3_202407051325403mvk03FH40.png", import.meta.url).href,
-    name: "朴庶韓國銅盤烤肉",
+    icon: `../../assets/img${brandIconImg[5].path}`,
+    name: "築間幸福鍋物",
   },
   {
-    icon: new URL("../../assets/companyImg/3_20240918134845oruiuh8UV1.png", import.meta.url).href,
-    img: new URL("../../assets/companyImg/hoverImg/3_20240913115334bs5ac4soC4.jpg", import.meta.url).href,
+    icon: `../../assets/img${brandIconImg[6].path}`,
+    name: "築間酸菜魚",
+  },
+  {
+    icon: `../../assets/img${brandIconImg[7].path}`,
     name: "朴庶韓國烤肉公社",
   },
   {
-    icon: new URL("../../assets/companyImg/3_20250310174341u8andhVOt0.jpg", import.meta.url).href,
-    img: new URL("../../assets/companyImg/hoverImg/JhuJian__index_brand_01_750x850.jpg", import.meta.url).href,
-    name: "芡芳石頭火鍋",
+    icon: `../../assets/img${brandIconImg[8].path}`,
+    name: "朴庶韓國銅盤烤肉",
+  },
+  {
+    icon: `../../assets/img${brandIconImg[9].path}`,
+    name: "燒肉smile",
+  },
+  {
+    icon: `../../assets/img${brandIconImg[10].path}`,
+    name: "有之和牛",
+  },
+  {
+    icon: `../../assets/img${brandIconImg[11].path}`,
+    name: "紫木槿韓國烤肉",
+  },
+  {
+    icon: `../../assets/img${brandIconImg[12].path}`,
+    name: "紫木槿韓餐酒館",
   },
 ]);
 const brandSelect = () => {
@@ -152,7 +143,7 @@ const goAbout = () => {
   menuClose.value = true;
 };
 const goNews = () => {
-  router.push({ path: "/news" });
+  router.push({ path: "/news/allNews" });
   menuClose.value = true;
 };
 const goMember = () => {
