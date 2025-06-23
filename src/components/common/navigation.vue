@@ -123,7 +123,7 @@ const goPosition = () => {
   router.push({ path: "/position", query: { name: "築間幸福鍋物" } });
 };
 const goHome = () => {
-  router.push({ path: "/home" });
+  router.push({ path: "/home/allNews" });
 };
 const goBooking = () => {
   router.push({ path: "/booking" });

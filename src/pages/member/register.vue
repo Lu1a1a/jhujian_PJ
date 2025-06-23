@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import axios, { AxiosError } from "axios";
-import { TResError } from "../../type/TResponseError.ts";
+import { AxiosError } from "axios";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useAuthMemberStore } from "../../store/useAuthMember.ts";
+import { memberRegister, memberLogin } from "../../api";
 import { firstNameAuth, lastNameAuth, telAuth, mailAuth, passwordAuth } from "../../composables/useFormAuth.ts";
 const pwdShow = ref(false);
 const pwdType = ref("password");
@@ -36,52 +36,35 @@ const registerAuth = async () => {
   PasswordAuth();
   if (!firstNameState.value || !lastNameState.value || !telState.value || !mailState.value || !passwordState.value)
     return;
+  const registerInfo = {
+    firstName: firstName.value,
+    lastName: lastName.value,
+    phone: Number(tel.value),
+    mail: mail.value,
+    password: password.value,
+  };
   try {
-    const { data } = await axios({
-      method: "post",
-      baseURL: "http://localhost:8000/",
-      url: "/member/register",
-      data: {
-        firstName: firstName.value,
-        lastName: lastName.value,
-        phone: Number(tel.value),
-        mail: mail.value,
-        password: password.value,
-      },
-    });
+    const data = await memberRegister(registerInfo);
     if ((data.success = true)) {
-      try {
-        const { data } = await axios({
-          method: "post",
-          baseURL: "http://localhost:8000/",
-          url: "/member/login",
-          data: {
-            phone: tel.value,
-            password: password.value,
-          },
-        });
-        popUpShow.value = true;
-        popUpMessage.value = "註冊成功，5秒後自動跳轉";
-        setLoginState(data.data.token);
-        memberInfo.value = data.data.memberInfo;
-        setTimeout(() => {
-          router.push({ path: "/member" });
-        }, 5000);
-        firstName.value = "";
-        lastName.value = "";
-        tel.value = "";
-        mail.value = "";
-        password.value = "";
-      } catch (error) {
-        const err = error as AxiosError<TResError>;
-        console.log(err);
-      }
+      const data = await memberLogin(registerInfo);
+      popUpShow.value = true;
+      popUpMessage.value = "註冊成功，5秒後自動跳轉";
+      setLoginState(data.data.token);
+      memberInfo.value = data.data.memberInfo;
+      setTimeout(() => {
+        router.push({ path: "/member" });
+      }, 5000);
+      firstName.value = "";
+      lastName.value = "";
+      tel.value = "";
+      mail.value = "";
+      password.value = "";
     }
   } catch (error) {
-    const err = error as AxiosError<TResError>;
+    const err = error as AxiosError;
     popUpShow.value = true;
-    if (err.response?.data.data.duplicate_value) {
-      const errMsg = err.response?.data.data.duplicate_value as string[];
+    if ((err.response?.data as any).data.duplicate_value) {
+      const errMsg = (err.response?.data as any).data.duplicate_value as string[];
       if (errMsg.includes("tel")) {
         tel.value = "";
         telState.value = false;

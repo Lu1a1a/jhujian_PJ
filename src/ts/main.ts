@@ -4,7 +4,7 @@ import "../style/style.css";
 import "@vuepic/vue-datepicker/dist/main.css";
 import App from "../App.vue";
 import { createPinia } from "pinia";
-import { setRouter } from "../router/index.ts";
+import { setRouter } from "../router";
 const app = createApp(App);
 const pinia = createPinia();
 const router = setRouter();

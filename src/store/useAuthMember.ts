@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { TMemberInfo } from "../type/TMemberInfo";
+import { getMemberInfo } from "../api";
 export const useAuthMemberStore = defineStore("authMember", () => {
   const isLogin = ref(false);
   const memberInfo = ref<TMemberInfo>({});
@@ -15,5 +16,10 @@ export const useAuthMemberStore = defineStore("authMember", () => {
     isLogin.value = false;
   };
 
-  return { memberInfo, isLogin, setLoginState, setSignOutState };
+  const setMemberInfo = async (token: string) => {
+    const data = await getMemberInfo(token);
+    memberInfo.value = data.data;
+  };
+
+  return { memberInfo, isLogin, setLoginState, setSignOutState, setMemberInfo };
 });

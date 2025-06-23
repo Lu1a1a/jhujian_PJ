@@ -4,6 +4,12 @@ const telRule = /^\d{10}$/;
 const mailRule = /^[^\s@]+@([^\s@]+\.)*(com\.tw|com|tw)$/;
 const passwordRule = /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{}|;:'",.<>\/?`~]{8,15}$/;
 
+const dateAuth = (date: string | null) => {
+  if (date != null) {
+    return true;
+  }
+  return false;
+};
 const firstNameAuth = (name: string) => {
   if (firstNameRule.test(name.toString())) {
     return true;
@@ -34,5 +40,11 @@ const passwordAuth = (pwd: string) => {
   }
   return false;
 };
+const searchTelAuth = (tel: string) => {
+  if (telRule.test(tel.toString())) {
+    return true;
+  }
+  return false;
+};
 
-export { firstNameAuth, lastNameAuth, telAuth, mailAuth, passwordAuth };
+export { firstNameAuth, lastNameAuth, telAuth, searchTelAuth, mailAuth, passwordAuth, dateAuth };

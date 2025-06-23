@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
-import axios from "axios";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import { useDateFormat } from "@vueuse/core";
 import { usePageCheckStore } from "../../store/usePageCheck";
-import { TScheduleArr } from "../../type/TBookingDate";
-import { TBookingOrder } from "../../type/TBookingOrder";
-import { TCityWeather } from "../../type/TCityWeather";
+import { AxiosError } from "axios";
+import { reservationSchedule, reservationOrder, reservationFind, reservationOrderDel, getWeather } from "../../api";
+import { firstNameAuth, lastNameAuth, telAuth, searchTelAuth, dateAuth } from "../../composables/useFormAuth.ts";
+
+import { TScheduleArr, TBookingOrder, TCityWeather } from "../../type";
 import pageFooter from "../../components/common/footer.vue";
 const pageCheckStore = usePageCheckStore();
 const { checkRoute } = pageCheckStore;
@@ -14,26 +15,23 @@ const adults = ref(6);
 const childs = ref(4);
 const EatAdults = ref(2);
 const Eatchilds = ref(0);
-const dataString = ref("選擇日期");
+const firstName = ref("");
+const firstNameState = ref(true);
+const lastName = ref("");
+const lastNameState = ref(true);
+const tel = ref("");
+const telState = ref(true);
+const searchTel = ref("");
+const SearchTelState = ref(true);
+const dateString = ref("選擇日期");
 const showData = ref(false);
-const bookingFirstName = ref("");
-const bookingLastName = ref("");
-const bookingTel = ref("");
-const bookingDateCheck = ref(true);
+const dateAuthState = ref(true);
 const bookingPopUp = ref(false);
 const bookingSuccess = ref(false);
 const bookingFail = ref(false);
-const errorTelMes = ref("");
-const errorFirstName = ref(false);
-const errorLastName = ref(false);
-const errorTel = ref(false);
-const searchTel = ref("");
-const errorSearchTel = ref(false);
 const searchDataArray = ref<TBookingOrder[] | null>(null);
 const searchPopUp = ref(false);
 const removeSuccess = ref(false);
-const telRule = /^\d{10}$/;
-const nameRule = /^[A-Za-z\u4e00-\u9fff\s]+$/;
 const weatherData = ref<TCityWeather[]>([]);
 const cityName = ref();
 const cityWeather = ref();
@@ -47,23 +45,16 @@ const Mdate = ref("");
 const searchOrder = ref(false);
 const searchOrderNone = ref(false);
 const reservationDay = ref<TScheduleArr[] | null>(null);
-const handleDateChange = async (data: Date) => {
-  bookingDateCheck.value = true;
+const handleDate = async (data: Date) => {
+  dateAuthState.value = true;
   const dateFormat = useDateFormat(data, "YYYY-MM-DD");
   const [year, month, date] = String(dateFormat.value).split("-");
   Myear.value = year;
   Mmonth.value = month;
   Mdate.value = date;
-  dataString.value = `${month}月${date}日`;
+  dateString.value = `${month}月${date}日`;
   try {
-    const { data } = await axios({
-      method: "get",
-      baseURL: "http://localhost:8000/",
-      url: "/reservation/schedule",
-      params: {
-        date: dateFormat.value,
-      },
-    });
+    const data = await reservationSchedule(dateFormat.value);
     const reservationArr = Object.entries(data.data).map((item) => {
       const { 0: hour, 1: min } = item[0].split(":");
       item[0] = `${hour}:${min}`;
@@ -72,7 +63,8 @@ const handleDateChange = async (data: Date) => {
     reservationDay.value = reservationArr as TScheduleArr[];
     currentIdx.value = -1;
   } catch (error) {
-    console.log(error);
+    const err = error as AxiosError;
+    console.log(err.response?.data);
   }
 };
 const checkLimit = (e: Event) => {
@@ -88,122 +80,97 @@ const checkLimit = (e: Event) => {
   }
 };
 const checkBooking = () => {
-  errorTelMes.value = "";
-  if (dataString.value === "選擇日期" || currentIdx.value === -1) {
-    bookingDateCheck.value = false;
-  }
-  if (bookingFirstName.value === "") errorFirstName.value = true;
-  if (bookingLastName.value === "") errorLastName.value = true;
-  if (bookingTel.value === "") errorTel.value = true;
-  if (errorFirstName.value || errorLastName.value || errorTel.value || !bookingDateCheck.value) return;
+  FirstNameAuth();
+  LastNameAuth();
+  TelAuth();
+  DateAuth();
+  if (!firstNameState.value || !lastNameState.value || !telState.value || !dateAuthState.value) return;
   bookingPopUp.value = true;
 };
+
 const cancelBooking = () => {
   bookingPopUp.value = false;
 };
+
+const DateAuth = () => {
+  dateAuthState.value = dateAuth(selectedDate.value);
+};
+
+const FirstNameAuth = () => {
+  firstNameState.value = firstNameAuth(firstName.value);
+};
+const LastNameAuth = () => {
+  lastNameState.value = lastNameAuth(lastName.value);
+};
+const TelAuth = () => {
+  telState.value = telAuth(tel.value);
+};
+const SearchTelAuth = () => {
+  SearchTelState.value = searchTelAuth(searchTel.value);
+  console.log(SearchTelState.value);
+};
+
 const comfirmBooking = async () => {
+  const orderInfo = {
+    adult: EatAdults.value,
+    child: Eatchilds.value,
+    date: `${Myear.value}-${Mmonth.value}-${Mdate.value}`,
+    time: `${timeString.value}:00`,
+    firstName: firstName.value,
+    lastName: lastName.value,
+    phone: tel.value,
+  };
   try {
-    await axios({
-      method: "post",
-      baseURL: "http://localhost:8000/",
-      url: "/reservation",
-      data: {
-        adult: EatAdults.value,
-        child: Eatchilds.value,
-        date: `${Myear.value}-${Mmonth.value}-${Mdate.value}`,
-        time: `${timeString.value}:00`,
-        firstName: bookingFirstName.value,
-        lastName: bookingLastName.value,
-        phone: bookingTel.value,
-      },
-    });
+    await reservationOrder(orderInfo);
     bookingSuccess.value = true;
   } catch (error) {
+    const err = error as AxiosError;
     bookingFail.value = true;
-    console.log(error);
+    console.log(err.response?.data);
   }
   setTimeout(() => {
     bookingPopUp.value = false;
     bookingSuccess.value = false;
     bookingFail.value = false;
-    bookingFirstName.value = "";
-    bookingLastName.value = "";
+    firstName.value = "";
+    lastName.value = "";
     reservationDay.value = [];
-    bookingTel.value = "";
-    dataString.value = "選擇日期";
+    tel.value = "";
+    dateString.value = "選擇日期";
     EatAdults.value = 2;
     Eatchilds.value = 0;
   }, 3000);
 };
 
-const changeFirstName = (e: Event) => {
-  bookingFirstName.value = (e.target as HTMLInputElement).value;
-  if (!nameRule.test(bookingFirstName.value)) return (errorFirstName.value = true);
-  errorFirstName.value = false;
-};
-const changeLastName = (e: Event) => {
-  bookingLastName.value = (e.target as HTMLInputElement).value;
-  if (!nameRule.test(bookingLastName.value)) return (errorLastName.value = true);
-  errorLastName.value = false;
-};
-const changeTel = (e: Event) => {
-  bookingTel.value = (e.target as HTMLInputElement).value;
-  if (!telRule.test(bookingTel.value) && bookingTel.value != "") {
-    errorTel.value = true;
-    return;
-  }
-  errorTel.value = false;
-};
-const changeSearchTel = (e: Event) => {
-  searchTel.value = (e.target as HTMLInputElement).value;
-  if (!telRule.test(searchTel.value) && searchTel.value != "") {
-    errorSearchTel.value = true;
-    return;
-  }
-  errorSearchTel.value = false;
-};
-
 const upDateOrder = async () => {
-  searchDataArray.value = [];
-  if (searchTel.value === "" || errorSearchTel.value) return (errorSearchTel.value = true);
+  SearchTelAuth();
+  if (!SearchTelState.value) return;
   try {
-    const { data: order_data } = await axios({
-      method: "post",
-      baseURL: "http://localhost:8000/",
-      url: "/reservation/find",
-      params: {
-        phone: searchTel.value,
-      },
-    });
+    const data = await reservationFind(searchTel.value);
     searchPopUp.value = true;
-    console.log(order_data);
-    if (order_data.data.length === 0) {
+    if (data.data.length === 0) {
       searchOrderNone.value = true;
       searchOrder.value = true;
+      return;
     }
-    searchDataArray.value = order_data.data.map((item: TBookingOrder) => {
+    searchDataArray.value = [];
+    searchDataArray.value = data.data.map((item: TBookingOrder) => {
       const [hour, min] = item.time.split(":");
       item.time = `${hour}:${min}`;
       return item;
     });
   } catch (error) {
-    console.log(error);
-    return;
+    const err = error as AxiosError;
+    console.log(err.response?.data);
   }
 };
 const removeOrder = async (idx: number) => {
   const { id } = (searchDataArray.value as TBookingOrder[])[idx];
   try {
-    await axios({
-      method: "delete",
-      baseURL: "http://localhost:8000/",
-      url: "/reservation",
-      params: {
-        order_id: id,
-      },
-    });
+    await reservationOrderDel(id);
   } catch (error) {
-    console.log(error);
+    const err = error as AxiosError;
+    console.log(err.response?.data);
   }
   searchDataArray.value = [];
   removeSuccess.value = true;
@@ -220,15 +187,13 @@ const closeOrder = () => {
 
 const getWeatherData = async () => {
   try {
-    const result = await axios({
-      url: "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWA-07B7EC45-CEE1-4AEA-B4CD-6754E5B6D36C&locationName=&elementName=Wx",
-      method: "get",
-    });
-    weatherData.value = result.data.records.location;
+    const data = await getWeather();
+    weatherData.value = data.data.records.location;
     cityName.value = weatherData.value[cityIdx.value].locationName;
     cityWeather.value = weatherData.value[cityIdx.value].weatherElement[0].time[1].parameter.parameterName;
   } catch (error) {
-    console.log(error);
+    const err = error as AxiosError;
+    console.log(err.response?.data);
   }
 };
 
@@ -242,15 +207,14 @@ const timer = setInterval(() => {
 const selectTime = (idx: number, e: Event) => {
   timeString.value = (e.target as HTMLElement).innerText;
   currentIdx.value = idx;
-  bookingDateCheck.value = true;
+  dateAuthState.value = true;
 };
-
-onMounted(async () => {
+onMounted(() => {
   checkRoute();
   window.addEventListener("click", () => {
     if (showData.value) showData.value = false;
   });
-  await getWeatherData();
+  getWeatherData();
 });
 onUnmounted(() => {
   window.removeEventListener("click", () => {
@@ -317,17 +281,17 @@ onUnmounted(() => {
             v-model="selectedDate"
             :enable-time-picker="false"
             :min-date="new Date()"
-            @update:modelValue="handleDateChange"
+            @update:modelValue="handleDate"
           >
             <template #trigger>
               <div class="w-full lg:mt-7">
                 <button
                   class="w-full pl-1 relative rounded-md text-left border bg-white lg:py-2 lg:pl-2 lg:text-xl"
                   :class="{
-                    'border-red-600': !bookingDateCheck,
+                    'border-red-600': !dateAuthState,
                   }"
                 >
-                  {{ dataString }}
+                  {{ dateString }}
                 </button>
               </div>
             </template>
@@ -335,7 +299,7 @@ onUnmounted(() => {
           <span
             class="opacity-0 absolute top-full text-sm text-red-600 lg:text-xl"
             :class="{
-              'opacity-100': !bookingDateCheck,
+              'opacity-100': !dateAuthState,
             }"
           >
             請選擇日期及時段
@@ -368,31 +332,29 @@ onUnmounted(() => {
           <div class="w-full flex gap-2 lg:mt-7">
             <input
               type="text"
-              class="w-1/3 pl-1 py-1 rounded-md border lg:py-2 lg:text-xl lg:grow"
+              class="w-1/3 pl-1 py-1 rounded-md outline-none lg:py-2 lg:text-xl lg:grow"
               :class="{
-                'border-red-600': errorFirstName,
-                'focus:outline-red-600': errorFirstName,
+                'outline-1 outline-red-500': !firstNameState,
               }"
               placeholder="輸入姓"
-              :value="bookingFirstName"
-              @change="changeFirstName"
+              v-model="firstName"
+              @change="FirstNameAuth"
             />
             <input
               type="text"
-              class="w-2/3 pl-1 py-1 rounded-md border lg:py-2 lg:text-xl lg:grow"
+              class="w-2/3 pl-1 py-1 rounded-md outline-none lg:py-2 lg:text-xl lg:grow"
               :class="{
-                'border-red-600': errorLastName,
-                'focus:outline-red-600': errorLastName,
+                'outline-1 outline-red-500': !lastNameState,
               }"
               placeholder="輸入名"
-              :value="bookingLastName"
-              @change="changeLastName"
+              v-model="lastName"
+              @change="LastNameAuth"
             />
           </div>
           <span
-            class="opacity-0 absolute top-full text-sm text-red-600 lg:text-xl"
+            class="absolute top-full text-sm text-red-600 lg:text-xl"
             :class="{
-              'opacity-100': errorLastName || errorFirstName,
+              'opacity-0': firstNameState && lastNameState,
             }"
           >
             輸入正確性名
@@ -403,21 +365,20 @@ onUnmounted(() => {
           <div class="w-full flex gap-2 lg:mt-7">
             <input
               type="tel"
-              class="w-full pl-1 py-1 border rounded-md lg:w-1/4 lg:py-2 lg:text-xl lg:grow"
+              class="w-full pl-1 py-1 rounded-md outline-none lg:w-1/4 lg:py-2 lg:text-xl lg:grow"
               :class="{
-                'border-red-600': errorTel,
-                'focus:outline-red-600': errorTel,
+                'outline-1 outline-red-500': !telState,
               }"
               placeholder="輸入電話號碼"
               maxlength="10"
-              :value="bookingTel"
-              @change="changeTel"
+              v-model="tel"
+              @change="TelAuth"
             />
           </div>
           <span
-            class="opacity-0 absolute top-full text-sm text-red-600 lg:text-xl"
+            class="absolute top-full text-sm text-red-600 lg:text-xl"
             :class="{
-              'opacity-100': errorTel,
+              'opacity-0': telState,
             }"
           >
             輸入正確電話號碼
@@ -435,20 +396,19 @@ onUnmounted(() => {
         <div class="w-full relative lg:mt-7">
           <input
             type="tel"
-            class="w-full pl-1 py-1 rounded-md border lg:w-1/2 lg:py-2 lg:text-xl"
+            class="w-full pl-1 py-1 rounded-md border outline-none lg:w-1/2 lg:py-2 lg:text-xl"
             :class="{
-              'border-red-600': errorSearchTel,
-              'focus:outline-red-600': errorSearchTel,
+              'outline-1 outline-red-500': !SearchTelState,
             }"
             placeholder="輸入電話號碼"
-            :value="searchTel"
+            v-model="searchTel"
             maxlength="10"
-            @change="changeSearchTel"
+            @change="SearchTelAuth"
           />
           <span
-            class="opacity-0 absolute top-full left-0 text-sm text-red-600 lg:right-2/3 lg:text-xl"
+            class="absolute top-full left-0 text-sm text-red-600 lg:right-2/3 lg:text-xl"
             :class="{
-              'opacity-100': errorSearchTel,
+              'opacity-0': SearchTelState,
             }"
           >
             輸入正確電話號碼
@@ -480,7 +440,7 @@ onUnmounted(() => {
         >
           預約日期：
           <span class="block w-fit mx-auto mt-1 text-black">
-            {{ dataString }}
+            {{ dateString }}
             <br />
             {{ timeString }}
           </span>
@@ -498,8 +458,8 @@ onUnmounted(() => {
           :class="{ hidden: bookingSuccess || bookingFail }"
         >
           聯絡資訊：
-          <span class="block w-fit mx-auto mt-1 text-black">{{ bookingFirstName }}{{ bookingLastName }} 先生/小姐</span>
-          <span class="block w-fit mx-auto text-black">{{ bookingTel }}</span>
+          <span class="block w-fit mx-auto mt-1 text-black">{{ firstName }}{{ lastName }} 先生/小姐</span>
+          <span class="block w-fit mx-auto text-black">{{ tel }}</span>
         </span>
         <div class="w-full flex justify-around lg:py-10" :class="{ hidden: bookingSuccess || bookingFail }">
           <button class="hover:text-gray-500 transition-all" @click="cancelBooking">取消</button>
@@ -586,7 +546,7 @@ onUnmounted(() => {
           >
             查無預約紀錄
           </span>
-          <div class="w-full flex justify-around lg:py-10">
+          <div class="w-full flex justify-around cursor-pointer lg:py-10">
             <button class="hover:text-gray-500 transition-all" @click="closeOrder">關閉</button>
           </div>
         </div>

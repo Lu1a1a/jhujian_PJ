@@ -8,7 +8,7 @@ import company from "../../components/home/company.vue";
 import pageFooter from "../../components/common/footer.vue";
 const pageCheckStore = usePageCheckStore();
 const { checkRoute } = pageCheckStore;
-onMounted(async () => {
+onMounted(() => {
   checkRoute();
 });
 </script>

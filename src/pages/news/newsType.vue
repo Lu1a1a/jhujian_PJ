@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import axios, { AxiosError } from "axios";
 import { ref, onMounted } from "vue";
-import { useRoute, onBeforeRouteUpdate } from "vue-router";
+import { useRoute, useRouter, onBeforeRouteUpdate, RouterLink } from "vue-router";
 const route = useRoute();
+const router = useRouter();
 const newsArr = ref();
 const size = ref(6);
 const loadState = ref(false);
@@ -17,6 +18,10 @@ const getNewsInfo = async (type: string) => {
         size: size.value,
       },
     });
+    if (data.data.resultArr.length === 0) {
+      router.replace("/notFound");
+      return;
+    }
     newsArr.value = data.data.resultArr.map((item: any) => {
       item.date = item.date.split("-");
       item.img_path = `../../assets/img${item.img_path}`;
@@ -42,10 +47,16 @@ onMounted(() => {
   getNewsInfo(route.params.type as string);
 });
 </script>
+
 <template>
   <div class="w-full mt-6">
     <div class="w-full flex flex-wrap justify-around md:w-2/3 md:mx-auto">
-      <div v-for="item in newsArr" :key="item.id" class="w-full mt-6 mb-10 cursor-pointer group sm:w-[45%] xl:w-[30%]">
+      <RouterLink
+        :to="{ path: `/news/${item.date.join('')}/${item.id}` }"
+        v-for="item in newsArr"
+        :key="item.id"
+        class="w-full mt-6 mb-10 cursor-pointer group sm:w-[45%] xl:w-[30%]"
+      >
         <div class="p-3 relative">
           <img :src="item.img_path" class="w-full aspect-[4/3] object-cover group-hover:contrast-50 transition-all" />
           <div
@@ -56,7 +67,7 @@ onMounted(() => {
           </div>
         </div>
         <div class="w-full px-3 mt-2 md:font-bold lg:text-lg">{{ item.title }}</div>
-      </div>
+      </RouterLink>
       <div v-show="!loadState" class="flex items-center gap-3 cursor-pointer group" @click="loadMore">
         <span class="text-gray-500 text-xl font-medium group-hover:text-black transition-colors lg:text-2xl">
           查看更多 More

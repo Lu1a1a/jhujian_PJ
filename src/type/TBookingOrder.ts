@@ -1,3 +1,12 @@
+export type TOrderInfo = {
+  adult: number;
+  child: number;
+  date: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  time: string;
+};
 export type TBookingOrder = {
   adult_count: number;
   child_count: number;

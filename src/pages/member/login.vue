@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import axios, { AxiosError } from "axios";
-import { TResError } from "../../type/TResponseError.ts";
+import { AxiosError } from "axios";
+import { memberLogin } from "../../api";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
@@ -27,16 +27,12 @@ const loginAuth = async () => {
   TelAuth();
   PasswordAuth();
   if (!telState.value || !passwordState.value) return;
+  const loginInfo = {
+    phone: tel.value,
+    password: password.value,
+  };
   try {
-    const { data } = await axios({
-      method: "post",
-      baseURL: "http://localhost:8000/",
-      url: "/member/login",
-      data: {
-        phone: tel.value,
-        password: password.value,
-      },
-    });
+    const data = await memberLogin(loginInfo);
     popUpShow.value = true;
     popUpMessage.value = "登入成功，5秒後自動跳轉";
     setLoginState(data.data.token);
@@ -45,14 +41,13 @@ const loginAuth = async () => {
       router.push({ path: "/member" });
     }, 5000);
   } catch (error) {
-    const err = error as AxiosError<TResError>;
-    console.log(err.response?.data);
-    if (err.response?.data.msg === "member not found") {
+    const err = error as AxiosError;
+    if ((err.response?.data as any).msg === "member not found") {
       popUpMessage.value = "無會員資料，請輸入正確的電話號碼";
       tel.value = "";
       telState.value = false;
     }
-    if (err.response?.data.msg === "wrong password") {
+    if ((err.response?.data as any).msg === "wrong password") {
       popUpMessage.value = "密碼錯誤，請輸入正確電話號碼";
       password.value = "";
       passwordState.value = false;
