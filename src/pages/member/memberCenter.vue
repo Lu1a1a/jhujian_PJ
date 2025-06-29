@@ -46,12 +46,13 @@ const getOrderInfo = async () => {
     const data = await reservationFind(tel);
     popUpShow.value = true;
     orderPopup.value = true;
-    if (data.data.length === 0) {
+
+    if (data.length === 0) {
       orderNone.value = true;
       return;
     }
     orderDataArray.value = [];
-    orderDataArray.value = data.data.map((item: TBookingOrder) => {
+    orderDataArray.value = data.map((item: TBookingOrder) => {
       const [hour, min] = item.time.split(":");
       item.time = `${hour}:${min}`;
       return item;

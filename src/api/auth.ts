@@ -13,7 +13,7 @@ const memberRegister = async (registerInfo: TMemberInfo) => {
       password: registerInfo.password,
     },
   });
-  return data;
+  return data.data;
 };
 
 const memberLogin = async (memberInfo: TMemberInfo) => {
@@ -26,7 +26,7 @@ const memberLogin = async (memberInfo: TMemberInfo) => {
       password: memberInfo.password,
     },
   });
-  return data;
+  return data.data;
 };
 
 export { memberRegister, memberLogin };

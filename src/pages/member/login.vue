@@ -35,8 +35,8 @@ const loginAuth = async () => {
     const data = await memberLogin(loginInfo);
     popUpShow.value = true;
     popUpMessage.value = "登入成功，5秒後自動跳轉";
-    setLoginState(data.data.token);
-    memberInfo.value = data.data.memberInfo;
+    setLoginState(data.token);
+    memberInfo.value = data.memberInfo;
     setTimeout(() => {
       router.push({ path: "/member" });
     }, 5000);

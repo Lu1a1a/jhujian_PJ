@@ -1,33 +1,28 @@
 <script setup lang="ts">
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { ref, onMounted } from "vue";
+import { getNewsInfo } from "../../api";
 import { useRoute, useRouter, onBeforeRouteUpdate, RouterLink } from "vue-router";
 const route = useRoute();
 const router = useRouter();
 const newsArr = ref();
-const size = ref(6);
-const loadState = ref(false);
-const getNewsInfo = async (type: string) => {
+const size = ref<number>(6);
+const moreState = ref(false);
+const loadState = ref(true);
+const getNewsInfoData = async (type: string) => {
   try {
-    const { data } = await axios({
-      method: "get",
-      baseURL: "http://localhost:8000/",
-      url: "/newsInfo",
-      params: {
-        category: type,
-        size: size.value,
-      },
-    });
-    if (data.data.resultArr.length === 0) {
+    const data = await getNewsInfo(type, size.value);
+    if (data.resultArr.length === 0) {
       router.replace("/notFound");
       return;
     }
-    newsArr.value = data.data.resultArr.map((item: any) => {
+    newsArr.value = data.resultArr.map((item: any) => {
       item.date = item.date.split("-");
       item.img_path = `../../assets/img${item.img_path}`;
       return item;
     });
-    loadState.value = data.data.loadDone;
+    moreState.value = data.loadDone;
+    loadState.value = false;
   } catch (error) {
     const err = error as AxiosError;
     console.log(err.response?.data);
@@ -35,22 +30,29 @@ const getNewsInfo = async (type: string) => {
 };
 
 const loadMore = async () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+  loadState.value = true;
   size.value += 6;
-  getNewsInfo(route.params.type as string);
+  await getNewsInfoData(route.params.type as string);
 };
 
 onBeforeRouteUpdate((to) => {
+  loadState.value = true;
   size.value = 6;
-  getNewsInfo(to.params.type as string);
+  getNewsInfoData(to.params.type as string);
 });
-onMounted(() => {
-  getNewsInfo(route.params.type as string);
+
+onMounted(async () => {
+  await getNewsInfoData(route.params.type as string);
 });
 </script>
 
 <template>
-  <div class="w-full mt-6">
-    <div class="w-full flex flex-wrap justify-around md:w-2/3 md:mx-auto">
+  <div class="w-full mt-6 relative">
+    <div v-show="!loadState" class="w-full flex flex-wrap justify-around md:w-2/3 md:mx-auto">
       <RouterLink
         :to="{ path: `/news/${item.date.join('')}/${item.id}` }"
         v-for="item in newsArr"
@@ -68,7 +70,7 @@ onMounted(() => {
         </div>
         <div class="w-full px-3 mt-2 md:font-bold lg:text-lg">{{ item.title }}</div>
       </RouterLink>
-      <div v-show="!loadState" class="flex items-center gap-3 cursor-pointer group" @click="loadMore">
+      <div v-show="!moreState" class="flex items-center gap-3 cursor-pointer group" @click="loadMore">
         <span class="text-gray-500 text-xl font-medium group-hover:text-black transition-colors lg:text-2xl">
           查看更多 More
         </span>
@@ -80,6 +82,17 @@ onMounted(() => {
             class="bounce w-2 h-2 rounded-full bg-gray-600 group-hover:bg-black transition-colors"
           ></span>
         </div>
+      </div>
+    </div>
+    <div v-show="loadState" class="w-full h-[50vh] flex justify-center items-center gap-3">
+      <span class="text-gray-500 text-xl font-medium transition-colors lg:text-4xl">加載中</span>
+      <div class="flex gap-2 lg:gap-4">
+        <span
+          v-for="item in 3"
+          :key="item"
+          :style="{ '--bounceDelay': item * 0.1 + 's' }"
+          class="bounce w-2 h-2 rounded-full bg-gray-600 lg:w-4 lg:h-4"
+        ></span>
       </div>
     </div>
   </div>

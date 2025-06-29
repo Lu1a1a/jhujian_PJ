@@ -46,13 +46,13 @@ onUnmounted(() => {
           媒體報導
         </RouterLink>
       </div>
-      <span class="hidden relative items-center grow md:flex xl:grow-1">
+      <RouterLink :to="{ path: '/news/allNews' }" class="hidden relative items-center grow md:flex xl:grow-1">
         <span class="grow h-px bg-black mx-3"></span>
         <span class="flex items-center group font-bold lg:text-lg 2xl:text-2xl">
           MORE 閱讀更多
           <span class="material-symbols-outlined align-middle transition group-hover:rotate-180">add</span>
         </span>
-      </span>
+      </RouterLink>
     </div>
     <div ref="carouselDom" class="carousel w-full relative">
       <router-view v-slot="{ Component }">

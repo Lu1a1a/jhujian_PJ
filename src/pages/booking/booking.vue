@@ -6,7 +6,6 @@ import { usePageCheckStore } from "../../store/usePageCheck";
 import { AxiosError } from "axios";
 import { reservationSchedule, reservationOrder, reservationFind, reservationOrderDel, getWeather } from "../../api";
 import { firstNameAuth, lastNameAuth, telAuth, searchTelAuth, dateAuth } from "../../composables/useFormAuth.ts";
-
 import { TScheduleArr, TBookingOrder, TCityWeather } from "../../type";
 import pageFooter from "../../components/common/footer.vue";
 const pageCheckStore = usePageCheckStore();
@@ -55,7 +54,7 @@ const handleDate = async (data: Date) => {
   dateString.value = `${month}月${date}日`;
   try {
     const data = await reservationSchedule(dateFormat.value);
-    const reservationArr = Object.entries(data.data).map((item) => {
+    const reservationArr = Object.entries(data).map((item) => {
       const { 0: hour, 1: min } = item[0].split(":");
       item[0] = `${hour}:${min}`;
       return item;
@@ -107,7 +106,6 @@ const TelAuth = () => {
 };
 const SearchTelAuth = () => {
   SearchTelState.value = searchTelAuth(searchTel.value);
-  console.log(SearchTelState.value);
 };
 
 const comfirmBooking = async () => {
@@ -148,13 +146,13 @@ const upDateOrder = async () => {
   try {
     const data = await reservationFind(searchTel.value);
     searchPopUp.value = true;
-    if (data.data.length === 0) {
+    if (data.length === 0) {
       searchOrderNone.value = true;
       searchOrder.value = true;
       return;
     }
     searchDataArray.value = [];
-    searchDataArray.value = data.data.map((item: TBookingOrder) => {
+    searchDataArray.value = data.map((item: TBookingOrder) => {
       const [hour, min] = item.time.split(":");
       item.time = `${hour}:${min}`;
       return item;
@@ -188,7 +186,7 @@ const closeOrder = () => {
 const getWeatherData = async () => {
   try {
     const data = await getWeather();
-    weatherData.value = data.data.records.location;
+    weatherData.value = data.records.location;
     cityName.value = weatherData.value[cityIdx.value].locationName;
     cityWeather.value = weatherData.value[cityIdx.value].weatherElement[0].time[1].parameter.parameterName;
   } catch (error) {

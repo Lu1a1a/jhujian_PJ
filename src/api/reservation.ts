@@ -9,7 +9,9 @@ const reservationSchedule = async (reservationDate: string) => {
       date: reservationDate,
     },
   });
-  return data;
+  console.log(data);
+
+  return data.data;
 };
 
 const reservationOrder = async (orderInfo: TOrderInfo) => {
@@ -27,7 +29,7 @@ const reservationOrder = async (orderInfo: TOrderInfo) => {
       phone: orderInfo.phone,
     },
   });
-  return data;
+  return data.data;
 };
 
 const reservationFind = async (phone: string) => {
@@ -39,7 +41,7 @@ const reservationFind = async (phone: string) => {
       phone: phone,
     },
   });
-  return data;
+  return data.data;
 };
 
 const reservationOrderDel = async (id: number) => {

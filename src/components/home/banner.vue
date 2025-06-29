@@ -31,7 +31,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div class="w-full mt-40">
+  <div id="home" class="w-full mt-40">
     <div ref="titleDom" class="title w-full">
       <div class="w-full">
         <span class="block text-center text-3xl md:text-6xl">築起你我的幸福空間</span>

@@ -6,10 +6,11 @@ import navigation from "./components/common/navigation.vue";
 import { useAuthMemberStore } from "./store/useAuthMember.ts";
 import { useCarouselImg } from "./store/useCarouselImg.ts";
 import { useScrollSave } from "./store/useScrollSave.ts";
+import { useMapScript } from "./composables/useMapScript.ts";
 const authMemberStore = useAuthMemberStore();
 const carouselImg = useCarouselImg();
 const scrollSave = useScrollSave();
-const { setLoginState, setMemberInfo, memberInfo } = authMemberStore;
+const { setLoginState, setMemberInfo } = authMemberStore;
 const { setCarouselImg } = carouselImg;
 const { prePosition } = storeToRefs(scrollSave);
 const animateShow = ref(true);
@@ -22,12 +23,12 @@ const vScrollY = {
 
 onMounted(async () => {
   const token = localStorage.getItem("login_token");
-
   if (token !== null) {
     setLoginState(token);
     await setMemberInfo(token);
   }
   setCarouselImg();
+  useMapScript();
 });
 </script>
 

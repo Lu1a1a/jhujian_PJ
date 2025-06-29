@@ -3,9 +3,10 @@ import "swiper/css/navigation";
 import { Swiper as SwiperClass } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Autoplay } from "swiper/modules";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter, onBeforeRouteUpdate, RouterLink } from "vue-router";
+import { getNewsInfo } from "../../api";
 const route = useRoute();
 const router = useRouter();
 const newsArr = ref();
@@ -17,30 +18,22 @@ const navigation = ref({
   prevEl: ".swiper-button-prev",
 });
 const swiperBreakPoint = {
-  768: { slidesPerView: 3, spaceBetween: 0, centeredSlides: true },
+  768: { slidesPerView: 3, centeredSlides: true },
 };
 
-const getNewsInfo = async (type: string) => {
+const getNewsInfoData = async (type: string) => {
   try {
-    const { data } = await axios({
-      method: "get",
-      baseURL: "http://localhost:8000/",
-      url: "/newsInfo",
-      params: {
-        category: type,
-        size: 6,
-      },
-    });
-    if (data.data.resultArr.length === 0) {
+    const data = await getNewsInfo(type, 6);
+    if (data.resultArr.length === 0) {
       router.replace("/notFound");
       return;
     }
-    newsArr.value = data.data.resultArr.map((item: any) => {
+    newsArr.value = data.resultArr.map((item: any) => {
       item.date = item.date.split("-");
       item.img_path = `../../assets/img${item.img_path}`;
       return item;
     });
-    loadState.value = data.data.loadDone;
+    loadState.value = data.loadDone;
   } catch (error) {
     const err = error as AxiosError;
     console.log(err.response?.data);
@@ -59,11 +52,11 @@ const leaveImg = () => {
 };
 
 onBeforeRouteUpdate((to) => {
-  getNewsInfo(to.params.type as string);
+  getNewsInfoData(to.params.type as string);
 });
 
 onMounted(() => {
-  getNewsInfo(route.params.type as string);
+  getNewsInfoData(route.params.type as string);
 });
 </script>
 <template>
@@ -77,7 +70,9 @@ onMounted(() => {
       :loop="true"
       :speed="2000"
       :navigation="navigation"
+      :centered-slides="true"
       :slides-per-view="2"
+      :space-between="50"
       :breakpoints="swiperBreakPoint"
       @swiper="swiperInit"
     >
@@ -124,15 +119,12 @@ onMounted(() => {
   width: 80%;
 }
 .swiper-slide {
-  width: 30% !important;
   aspect-ratio: 1/1.4;
-  margin: 0 2%;
 }
 @media screen and (max-width: 768px) {
   .swiper-slide {
-    width: 45% !important;
+    flex-grow: 1;
     aspect-ratio: 1/1.8;
-    margin: 0 2.5%;
   }
   .swiper-button-prev {
     left: 2%;

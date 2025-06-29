@@ -170,6 +170,10 @@ const goInvestor = () => {
   router.push({ path: "/investor" });
   menuClose.value = true;
 };
+const goCompanyBrand = () => {
+  router.push({ path: "/home/allNews", hash: "#companyBrand" });
+  menuClose.value = true;
+};
 onMounted(() => {
   showNav.value = true;
   window.addEventListener("scroll", NavFixed);
@@ -228,14 +232,14 @@ onUnmounted(() => {
         </div>
       </li>
       <li class="w-1/4">
-        <a href="#" @click="goHome">
+        <span @click="goHome">
           <img
-            class="m-auto"
+            class="m-auto cursor-pointer"
             src="../../assets/img/common/logo/JhuJian_sm_logo.svg"
             alt="logo"
             :class="{ invert: isNavBgTransparent }"
           />
-        </a>
+        </span>
       </li>
       <ul class="w-1/4 flex text-center justify-around">
         <li class="w-1/2 relative md:w-fit">
@@ -387,7 +391,7 @@ onUnmounted(() => {
           </span>
         </div>
       </div>
-      <span class="group w-full flex items-center lg:text-xl">
+      <span class="group w-full flex items-center cursor-pointer lg:text-xl" @click="goCompanyBrand">
         MORE 品牌總覽
         <span class="material-symbols-outlined align-middle transition group-hover:rotate-180">add</span>
         <span class="grow ml-5 h-px bg-black"></span>

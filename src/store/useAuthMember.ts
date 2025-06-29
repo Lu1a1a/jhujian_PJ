@@ -17,8 +17,12 @@ export const useAuthMemberStore = defineStore("authMember", () => {
   };
 
   const setMemberInfo = async (token: string) => {
-    const data = await getMemberInfo(token);
-    memberInfo.value = data.data;
+    try {
+      const data = await getMemberInfo(token);
+      memberInfo.value = data;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return { memberInfo, isLogin, setLoginState, setSignOutState, setMemberInfo };

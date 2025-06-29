@@ -162,7 +162,10 @@ onUnmounted(() => {
 });
 </script>
 <template>
-  <div class="w-full relative h-screen mt-10 mb-48 px-5 md:grid md:grid-rows-5 md:grid-cols-2 gap-10 xl:px-28">
+  <div
+    id="companyBrand"
+    class="w-full relative h-screen mt-10 mb-48 px-5 md:grid md:grid-rows-5 md:grid-cols-2 gap-10 xl:px-28"
+  >
     <div
       ref="titleDom"
       class="title w-fit aspect-square flex flex-col gap-5 md:w-full md:h-full md:row-start-1 md:row-end-3 md:col-start-1 md:col-end-2 md:justify-evenly"
@@ -228,7 +231,8 @@ onUnmounted(() => {
         </SwiperSlide>
       </Swiper>
     </div>
-    <span
+    <RouterLink
+      :to="{ path: '/news/allNews' }"
       class="flex items-center my-10 grow md:absolute md:bottom-[-10%] md:left-0 md:right-0 md:px-10 md:my-0 xl:px-28"
     >
       <span class="flex items-center group font-bold md:text-2xl">
@@ -236,7 +240,7 @@ onUnmounted(() => {
         <span class="material-symbols-outlined align-middle md:text-4xl transition group-hover:rotate-180">add</span>
       </span>
       <span class="grow h-px bg-black ml-3"></span>
-    </span>
+    </RouterLink>
   </div>
 </template>
 <style scoped>

@@ -22,6 +22,7 @@ export const setRouter = () => {
       to.name === "newsCarouselType" ||
       to.name === "newsDetail" ||
       to.name === "newsType" ||
+      to.name === "recruiting" ||
       to.name === "booking" ||
       to.name === "position" ||
       to.name === "login" ||

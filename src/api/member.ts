@@ -8,7 +8,7 @@ const getMemberInfo = async (token: string) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  return data;
+  return data.data;
 };
 
 export { getMemberInfo };

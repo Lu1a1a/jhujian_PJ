@@ -1,29 +1,22 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
+import { getNewsDetailInfo } from "../../api";
 import pageFooter from "../../components/common/footer.vue";
 const route = useRoute();
 const router = useRouter();
-const paragraphHTML = ref("");
 const newsDetailInfo = ref();
-const getNewsDetailInfo = async (newsId: string) => {
+const loadState = ref(true);
+const getNewsDetailInfoData = async (newsId: string) => {
   try {
-    const { data } = await axios({
-      method: "get",
-      baseURL: "http://localhost:8000/",
-      url: "/newsDetailInfo",
-      params: {
-        id: newsId,
-      },
-    });
-    newsDetailInfo.value = data.data.map((item: any) => {
+    const data = await getNewsDetailInfo(newsId);
+    newsDetailInfo.value = data.map((item: any) => {
       item.date = item.date.split("-");
       item.img_path = `../../assets/img${item.img_path}`;
       return item;
     })[0];
-    // paragraphHTML.value = .replace(/。/g, "。<br>");
-    console.log(newsDetailInfo.value);
+    loadState.value = false;
   } catch (error) {
     const err = error as AxiosError;
     console.log(err.response?.data);
@@ -33,8 +26,8 @@ const backPage = () => {
   router.back();
 };
 
-onMounted(() => {
-  getNewsDetailInfo(route.params.id as string);
+onMounted(async () => {
+  await getNewsDetailInfoData(route.params.id as string);
 });
 </script>
 <template>
@@ -57,10 +50,9 @@ onMounted(() => {
         >
           <img class="w-full h-full object-cover" :src="newsDetailInfo.img_path" alt="newsImg" />
         </div>
-        <p
-          v-html="paragraphHTML"
-          class="mx-auto my-5 text-left leading-relaxed lg:w-2/3 lg:mt-10 lg:text-xl 2xl:mt-16"
-        ></p>
+        <p class="mx-auto my-5 text-left whitespace-pre-wrap lg:w-2/3 lg:mt-10 lg:text-xl 2xl:mt-16">
+          {{ newsDetailInfo.description }}
+        </p>
         <button
           class="w-1/2 py-1 px-4 mx-auto my-10 block border border-black rounded-full text-center lg:w-1/4 lg:text-2xl lg:hover:bg-black lg:hover:text-white lg:transition-all 2xl:py-4"
           @click="backPage"
@@ -69,7 +61,30 @@ onMounted(() => {
         </button>
       </div>
     </div>
+    <div v-show="loadState" class="w-full h-screen flex justify-center items-center gap-3">
+      <span class="text-gray-500 text-xl font-medium transition-colors lg:text-4xl">加載中</span>
+      <div class="flex gap-2 lg:gap-4">
+        <span
+          v-for="item in 3"
+          :key="item"
+          :style="{ '--bounceDelay': item * 0.1 + 's' }"
+          class="bounce w-2 h-2 rounded-full bg-gray-600 lg:w-4 lg:h-4"
+        ></span>
+      </div>
+    </div>
     <pageFooter />
   </div>
 </template>
-<style scoped></style>
+<style scoped>
+.bounce {
+  animation: bounce 0.6s var(--bounceDelay) ease infinite alternate;
+}
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+</style>
