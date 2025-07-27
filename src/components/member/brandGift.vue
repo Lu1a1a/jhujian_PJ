@@ -12,7 +12,7 @@
         <div class="w-[90%] py-5 bg-stone-700 text-white md:w-[40%]">
           <div class="w-full text-center mt-5">
             <div class="w-1/5 mx-auto xl:w-1/6">
-              <img src="../../assets/img/memberPage/brandIcon/jhujianshabu.png" />
+              <img src="http://104.199.165.235/assets/jhujianshabu-CxmjR8IQ.png" />
             </div>
             <span class="md:text-lg 2xl:text-xl">築間幸福鍋物 兌換品項</span>
           </div>
@@ -116,7 +116,7 @@
         <div class="w-[90%] py-5 bg-yellow-400 text-black md:w-[40%]">
           <div class="w-full text-center mt-5">
             <div class="w-1/5 mx-auto xl:w-1/6">
-              <img src="../../assets/img/memberPage/brandIcon/yakiniku_smile.png" />
+              <img src="http://104.199.165.235/assets/yakiniku_smile-RZowgdK9.jpg" />
             </div>
             <span class="md:text-lg 2xl:text-xl">燒肉 SMILE 兌換品項</span>
           </div>
@@ -198,7 +198,7 @@
         <div class="w-[90%] py-5 bg-amber-500 text-white md:w-[40%]">
           <div class="w-full text-center mt-5">
             <div class="w-1/5 mx-auto xl:w-1/6">
-              <img src="../../assets/img/memberPage/brandIcon/honkakuwagyu.png" />
+              <img src="http://104.199.165.235/assets/honkakuwagyu-CnM4OpBW.jpg" />
             </div>
             <span class="md:text-lg 2xl:text-xl">本格和牛 燒肉放題兌換</span>
           </div>
@@ -250,10 +250,12 @@
             </div>
           </div>
         </div>
-        <div class="w-[90%] py-5 bg-[url('../../assets/img/memberPage/yuituwagyu_bg.jpg')] text-white md:w-[40%]">
+        <div
+          class="w-[90%] py-5 bg-[url('http://104.199.165.235/assets/yuituwagyu_bg-BOT8Rn80.jpg')] text-white md:w-[40%]"
+        >
           <div class="w-full text-center mt-5">
             <div class="w-1/5 mx-auto xl:w-1/6">
-              <img src="../../assets/img/memberPage/brandIcon/yuituwagyu.png" />
+              <img src="http://104.199.165.235/assets/yuituwagyu-BIJmXtiD.jpg" />
             </div>
             <span class="md:text-lg 2xl:text-xl">有之和牛 鍋物放題兌換</span>
           </div>
@@ -308,7 +310,7 @@
         <div class="w-[90%] py-5 bg-pink-600 text-white md:w-[40%]">
           <div class="w-full text-center mt-5">
             <div class="w-1/5 mx-auto xl:w-1/6">
-              <img src="../../assets/img/memberPage/brandIcon/jhujiansuancaiyu2.png" />
+              <img src="http://104.199.165.235/assets/jhujiansuancaiyu2-CfYncpfA.png" />
             </div>
             <span class="md:text-lg 2xl:text-xl">築間酸菜魚 兌換品項</span>
           </div>
@@ -385,7 +387,7 @@
         <div class="w-[90%] py-5 bg-pink-600 text-white md:w-[40%]">
           <div class="w-full text-center mt-5">
             <div class="w-1/5 mx-auto xl:w-1/6">
-              <img src="../../assets/img/memberPage/brandIcon/jhujiansuancaiyu.png" />
+              <img src="http://104.199.165.235/assets/jhujiansuancaiyu-Dp1lxW37.png" />
             </div>
             <span class="md:text-lg 2xl:text-xl">築間酸菜魚火鍋 兌換品項</span>
           </div>
@@ -445,7 +447,7 @@
         <div class="w-[90%] py-5 bg-blue-900 text-white md:w-[40%]">
           <div class="w-full text-center mt-5">
             <div class="w-1/5 mx-auto xl:w-1/6">
-              <img src="../../assets/img/memberPage/brandIcon/emabettei_yakiniku.png" />
+              <img src="http://104.199.165.235/assets/emabettei_yakiniku-BUvU9FBw.png" />
             </div>
             <span class="md:text-lg 2xl:text-xl">绘馬別邸 兌換品項(台中水湳店限定)</span>
           </div>
@@ -493,7 +495,7 @@
         <div class="w-[90%] py-5 bg-[#84626a] text-white md:w-[40%]">
           <div class="w-full text-center mt-5">
             <div class="w-1/5 mx-auto xl:w-1/6">
-              <img src="../../assets/img/memberPage/brandIcon/zihmujin_koreabbq.png" />
+              <img src="http://104.199.165.235/assets/zihmujin_koreabbq-BkafxNs3.png" />
             </div>
             <span class="md:text-lg 2xl:text-xl">紫木槿韓國烤肉 兌換品項</span>
           </div>
@@ -521,7 +523,7 @@
         <div class="w-[90%] py-5 bg-[#84626a] text-white md:w-[40%]">
           <div class="w-full text-center mt-5">
             <div class="w-1/5 mx-auto xl:w-1/6">
-              <img src="../../assets/img/memberPage/brandIcon/zihmujin_koreabistro.png" />
+              <img src="http://104.199.165.235/assets/zihmujin_koreabistro-ThadLjii.png" />
             </div>
             <span class="md:text-lg 2xl:text-xl">紫木槿韓餐酒館 兌換品項</span>
           </div>
@@ -578,7 +580,7 @@
         <div class="w-[90%] py-5 bg-[#313c86] text-white md:w-[40%]">
           <div class="w-full text-center mt-5">
             <div class="w-1/5 mx-auto xl:w-1/6">
-              <img src="../../assets/img/memberPage/brandIcon/CanFondHotPot.png" />
+              <img src="http://104.199.165.235/assets/CanFondHotPot-DT_Zf8gL.png" />
             </div>
             <span class="md:text-lg 2xl:text-xl">芡芳石頭火鍋 兌換品項</span>
           </div>
@@ -624,7 +626,7 @@
         <div class="w-[90%] py-5 bg-yellow-500 text-white md:w-[40%]">
           <div class="w-full text-center mt-5">
             <div class="w-1/5 mx-auto xl:w-1/6">
-              <img src="../../assets/img/memberPage/brandIcon/parkshukoreanbbq.png" />
+              <img src="http://104.199.165.235/assets/parkshukoreanbulgogi-DEGTfIcH.png" />
             </div>
             <span class="md:text-lg 2xl:text-xl">朴庶韓國烤肉 兌換品項</span>
           </div>
@@ -661,7 +663,7 @@
         <div class="w-[90%] py-5 bg-red-600 text-white md:w-[40%]">
           <div class="w-full text-center mt-5">
             <div class="w-1/5 mx-auto xl:w-1/6">
-              <img src="../../assets/img/memberPage/brandIcon/parkshukoreanbulgogi.png" />
+              <img src="http://104.199.165.235/assets/parkshukoreanbbq-0xJjsarm.png" />
             </div>
             <span class="md:text-lg 2xl:text-xl">朴庶銅盤烤肉 兌換品項</span>
           </div>

@@ -13,7 +13,7 @@ const getNewsDetailInfoData = async (newsId: string) => {
     const data = await getNewsDetailInfo(newsId);
     newsDetailInfo.value = data.map((item: any) => {
       item.date = item.date.split("-");
-      item.img_path = `../../assets/img${item.img_path}`;
+      item.img_path = `${item.img_path}`;
       return item;
     })[0];
     loadState.value = false;

@@ -6,7 +6,8 @@ import navigation from "./components/common/navigation.vue";
 import { useAuthMemberStore } from "./store/useAuthMember.ts";
 import { useCarouselImg } from "./store/useCarouselImg.ts";
 import { useScrollSave } from "./store/useScrollSave.ts";
-import { useMapScript } from "./composables/useMapScript.ts";
+import { useMapScript } from "./utils/mapScript.ts";
+import.meta.glob("./assets/img/**/*.{png,jpg,jpeg,svg}", { eager: true });
 const authMemberStore = useAuthMemberStore();
 const carouselImg = useCarouselImg();
 const scrollSave = useScrollSave();
@@ -35,7 +36,7 @@ onMounted(async () => {
 <template>
   <Transition name="animateTransition">
     <startAnimation v-if="animateShow" />
-    <div v-else class="w-full overflow-hidden bg-[url('./assets/img/common/bg/JhuJian_bg.jpg')]">
+    <div v-else class="w-full overflow-hidden selfBgImg">
       <navigation />
       <RouterView v-slot="{ Component }">
         <Transition name="fade" mode="out-in">
@@ -67,5 +68,8 @@ onMounted(async () => {
 .fade-enter-to,
 .fade-leave-from {
   opacity: 1;
+}
+.selfBgImg {
+  background-image: url("./assets/img/common/bg/JhuJian_bg.jpg");
 }
 </style>

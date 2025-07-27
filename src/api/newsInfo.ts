@@ -2,8 +2,7 @@ import axios from "axios";
 const getNewsInfo = async (type: string, size: number) => {
   const { data } = await axios({
     method: "get",
-    baseURL: "http://localhost:8000/",
-    url: "/newsInfo",
+    url: "/api/newsInfo",
     params: {
       category: type,
       size: size,
@@ -14,8 +13,7 @@ const getNewsInfo = async (type: string, size: number) => {
 const getNewsDetailInfo = async (newsId: string) => {
   const { data } = await axios({
     method: "get",
-    baseURL: "http://localhost:8000/",
-    url: "/newsDetailInfo",
+    url: "/api/newsDetailInfo",
     params: {
       id: newsId,
     },

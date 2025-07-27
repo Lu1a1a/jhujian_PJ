@@ -1,5 +1,5 @@
 import { storeToRefs } from "pinia";
-import { RouteLocationNormalized, NavigationGuardNext } from "vue-router";
+import {} from "vue-router";
 import { useAuthMemberStore } from "../../store/useAuthMember";
 import memberCenter from "../../pages/member/memberCenter.vue";
 import memberAuth from "../../pages/member/memberAuth.vue";
@@ -10,14 +10,12 @@ export default [
     name: "member",
     path: "/member",
     component: memberCenter,
-    beforeEnter: (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
+    beforeEnter: () => {
       const authMemberStore = useAuthMemberStore();
       const { isLogin } = storeToRefs(authMemberStore);
       if (isLogin.value === false) {
-        next({ path: "/member/auth/login" });
-        return;
+        return { path: "/member/auth/login" };
       }
-      next();
     },
   },
   {

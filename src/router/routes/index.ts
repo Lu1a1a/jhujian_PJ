@@ -5,5 +5,5 @@ import group from "./group";
 import news from "./news";
 import member from "./member";
 import common from "./common";
-const routes: any = [...home, ...booking, ...position, ...group, ...news, ...member, ...common];
+const routes: any = [...common, ...home, ...booking, ...position, ...group, ...news, ...member];
 export default routes;

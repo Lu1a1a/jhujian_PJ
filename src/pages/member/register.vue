@@ -5,7 +5,7 @@ import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useAuthMemberStore } from "../../store/useAuthMember.ts";
 import { memberRegister, memberLogin } from "../../api";
-import { firstNameAuth, lastNameAuth, telAuth, mailAuth, passwordAuth } from "../../composables/useFormAuth.ts";
+import { firstNameAuth, lastNameAuth, telAuth, mailAuth, passwordAuth } from "../../utils/formAuth.ts";
 const pwdShow = ref(false);
 const pwdType = ref("password");
 const firstName = ref("");
@@ -39,7 +39,7 @@ const registerAuth = async () => {
   const registerInfo = {
     firstName: firstName.value,
     lastName: lastName.value,
-    phone: Number(tel.value),
+    phone: tel.value,
     mail: mail.value,
     password: password.value,
   };

@@ -4,7 +4,7 @@ import { memberLogin } from "../../api";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
-import { telAuth, passwordAuth } from "../../composables/useFormAuth.ts";
+import { telAuth, passwordAuth } from "../../utils/formAuth.ts";
 import { useAuthMemberStore } from "../../store/useAuthMember.ts";
 const router = useRouter();
 const pwdShow = ref(false);
@@ -81,10 +81,10 @@ const closePopUp = () => {
       <input
         type="tel"
         placeholder="輸入電話"
+        v-model="tel"
         maxlength="10"
         class="block w-full px-2 py-1 mt-1 rounded-lg outline-none md:py-2"
         :class="{ 'outline-1 outline-red-500': !telState }"
-        v-model="tel"
         @input="TelAuth"
       />
       <span

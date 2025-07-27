@@ -8,8 +8,6 @@ import { Swiper as SwiperClass } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Grid, Autoplay } from "swiper/modules";
 import { useWindowSize } from "@vueuse/core";
-import { storeToRefs } from "pinia";
-import { useCarouselImg } from "../../store/useCarouselImg.ts";
 const router = useRouter();
 const { width } = useWindowSize();
 const titleDom = ref<HTMLDivElement | null>(null);
@@ -19,16 +17,6 @@ const companyfadeTopState = ref<boolean>(true);
 const swiperRef = ref();
 const currentIdx = ref(0);
 const modules = ref([Grid, Autoplay]);
-const carouselImg = useCarouselImg();
-const { carouselImgArr } = storeToRefs(carouselImg);
-const brandFoodImg = carouselImgArr.value.filter((item: any) => {
-  const { 2: type, 3: folder } = item.path.split("/");
-  return type === "brandCarousel" && folder === "brandFood";
-});
-const brandIconImg = carouselImgArr.value.filter((item: any) => {
-  const { 2: type, 3: folder } = item.path.split("/");
-  return type === "brandCarousel" && folder === "brandIcon";
-});
 const gridOptions = ref<{ [key: string]: string | number }>({
   rows: 0,
   fill: "row",
@@ -63,68 +51,68 @@ const swiperBreakPoint = {
 };
 const data = ref([
   {
-    icon: `../../assets/img${brandIconImg[0].path}`,
-    img: `../../assets/img${brandFoodImg[0].path}`,
+    icon: `http://104.199.165.235/assets/CanFondHotPot-C1Xy5rpn.jpg`,
+    img: `http://104.199.165.235/assets/CanFondHotPot-1twqldCQ.jpg`,
     name: "芡芳石頭火鍋",
   },
   {
-    icon: `../../assets/img${brandIconImg[1].path}`,
-    img: `../../assets/img${brandFoodImg[1].path}`,
+    icon: `http://104.199.165.235/assets/emabettei_yakiniku-CTOvE_3E.jpg`,
+    img: `http://104.199.165.235/assets/emabettei_yakiniku-BkZO-VM6.jpg`,
     name: "絵馬別邸",
   },
   {
-    icon: `../../assets/img${brandIconImg[2].path}`,
-    img: `../../assets/img${brandFoodImg[2].path}`,
+    icon: `http://104.199.165.235/assets/honkakuwagyu-CnM4OpBW.jpg`,
+    img: `http://104.199.165.235/assets/honkakuwagyu-BQLwUxY2.jpg`,
     name: "本格燒肉",
   },
   {
-    icon: `../../assets/img${brandIconImg[3].path}`,
-    img: `../../assets/img${brandFoodImg[3].path}`,
+    icon: `http://104.199.165.235/assets/honmei_yakiniku-Cz6llYVB.png`,
+    img: `http://104.199.165.235/assets/honmei_yakiniku-DYRvFJdi.png`,
     name: "燒肉本命",
   },
   {
-    icon: `../../assets/img${brandIconImg[4].path}`,
-    img: `../../assets/img${brandFoodImg[4].path}`,
+    icon: `http://104.199.165.235/assets/Jhujian_Fried_Chicken-D6CW18Xl.png`,
+    img: `http://104.199.165.235/assets/Jhujian_Fried_Chicken-CvYOHInw.jpg`,
     name: "築間台灣鹽酥雞",
   },
   {
-    icon: `../../assets/img${brandIconImg[5].path}`,
-    img: `../../assets/img${brandFoodImg[5].path}`,
+    icon: `http://104.199.165.235/assets/jhujianshabu-Cx97PfMv.jpg`,
+    img: `http://104.199.165.235/assets/jhujianshabu-D-kstD9J.jpg`,
     name: "築間幸福鍋物",
   },
   {
-    icon: `../../assets/img${brandIconImg[6].path}`,
-    img: `../../assets/img${brandFoodImg[6].path}`,
+    icon: `http://104.199.165.235/assets/jhujiansuancaiyu-DjC1bxwP.jpg`,
+    img: `http://104.199.165.235/assets/jhujiansuancaiyu-CYRu-WOM.jpg`,
     name: "築間酸菜魚",
   },
   {
-    icon: `../../assets/img${brandIconImg[7].path}`,
-    img: `../../assets/img${brandFoodImg[7].path}`,
+    icon: `http://104.199.165.235/assets/parkshukoreanbbq-Cpta-OTk.png`,
+    img: `http://104.199.165.235/assets/parkshukoreanbbq-C64nfQCD.jpg`,
     name: "朴庶韓國烤肉公社",
   },
   {
-    icon: `../../assets/img${brandIconImg[8].path}`,
-    img: `../../assets/img${brandFoodImg[8].path}`,
+    icon: `http://104.199.165.235/assets/parkshukoreanbulgogi-BWDn5FL5.png`,
+    img: `http://104.199.165.235/assets/parkshukoreanbulgogi-CvFHz5Fv.jpg`,
     name: "朴庶韓國銅盤烤肉",
   },
   {
-    icon: `../../assets/img${brandIconImg[9].path}`,
-    img: `../../assets/img${brandFoodImg[9].path}`,
+    icon: `http://104.199.165.235/assets/yakiniku_smile-RZowgdK9.jpg`,
+    img: `http://104.199.165.235/assets/yakiniku_smile-CTRBGW8G.jpg`,
     name: "燒肉smile",
   },
   {
-    icon: `../../assets/img${brandIconImg[10].path}`,
-    img: `../../assets/img${brandFoodImg[10].path}`,
+    icon: `http://104.199.165.235/assets/yuituwagyu-BIJmXtiD.jpg`,
+    img: `http://104.199.165.235/assets/yuituwagyu-ndyf65Qa.jpg`,
     name: "有之和牛",
   },
   {
-    icon: `../../assets/img${brandIconImg[11].path}`,
-    img: `../../assets/img${brandFoodImg[11].path}`,
+    icon: `http://104.199.165.235/assets/zihmujin_koreabbq-CBKyklLH.jpg`,
+    img: `http://104.199.165.235/assets/zihmujin_koreabbq-C4Zda0ap.jpg`,
     name: "紫木槿韓國烤肉",
   },
   {
-    icon: `../../assets/img${brandIconImg[12].path}`,
-    img: `../../assets/img${brandFoodImg[12].path}`,
+    icon: `http://104.199.165.235/assets/zihmujin_koreabistro-8OMzHAy5.jpg`,
+    img: `http://104.199.165.235/assets/zihmujin_koreabistro-WFwWS4mQ.jpg`,
     name: "紫木槿韓餐酒館",
   },
 ]);

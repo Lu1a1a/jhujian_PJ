@@ -1,10 +1,10 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import { useCheckNavBgStore } from "../store/useCheckNavBg";
 import { useScrollSave } from "../store/useScrollSave.ts";
 import routes from "./routes";
 export const setRouter = () => {
   const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes,
     scrollBehavior(to, from, savedPosition) {
       const scrollSave = useScrollSave();

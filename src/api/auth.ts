@@ -3,12 +3,11 @@ import { TMemberInfo } from "../type";
 const memberRegister = async (registerInfo: TMemberInfo) => {
   const { data } = await axios({
     method: "post",
-    baseURL: "http://localhost:8000/",
-    url: "/member/register",
+    url: "/api/member/register",
     data: {
       firstName: registerInfo.firstName,
       lastName: registerInfo.lastName,
-      phone: Number(registerInfo.phone),
+      phone: registerInfo.phone,
       mail: registerInfo.mail,
       password: registerInfo.password,
     },
@@ -19,10 +18,9 @@ const memberRegister = async (registerInfo: TMemberInfo) => {
 const memberLogin = async (memberInfo: TMemberInfo) => {
   const { data } = await axios({
     method: "post",
-    baseURL: "http://localhost:8000/",
-    url: "/member/login",
+    url: "/api/member/login",
     data: {
-      phone: Number(memberInfo.phone),
+      phone: memberInfo.phone,
       password: memberInfo.password,
     },
   });

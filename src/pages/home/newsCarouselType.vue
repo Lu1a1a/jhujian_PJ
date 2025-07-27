@@ -30,7 +30,7 @@ const getNewsInfoData = async (type: string) => {
     }
     newsArr.value = data.resultArr.map((item: any) => {
       item.date = item.date.split("-");
-      item.img_path = `../../assets/img${item.img_path}`;
+      item.img_path = `${item.img_path}`;
       return item;
     });
     loadState.value = data.loadDone;

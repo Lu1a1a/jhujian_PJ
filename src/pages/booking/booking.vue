@@ -5,7 +5,7 @@ import { useDateFormat } from "@vueuse/core";
 import { usePageCheckStore } from "../../store/usePageCheck";
 import { AxiosError } from "axios";
 import { reservationSchedule, reservationOrder, reservationFind, reservationOrderDel, getWeather } from "../../api";
-import { firstNameAuth, lastNameAuth, telAuth, searchTelAuth, dateAuth } from "../../composables/useFormAuth.ts";
+import { firstNameAuth, lastNameAuth, telAuth, searchTelAuth, dateAuth } from "../../utils/formAuth.ts";
 import { TScheduleArr, TBookingOrder, TCityWeather } from "../../type";
 import pageFooter from "../../components/common/footer.vue";
 const pageCheckStore = usePageCheckStore();

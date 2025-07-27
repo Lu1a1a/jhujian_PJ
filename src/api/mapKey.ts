@@ -2,8 +2,7 @@ import axios from "axios";
 const getMapKey = async () => {
   const { data } = await axios({
     method: "get",
-    baseURL: "http://localhost:8000/",
-    url: "/mapKey",
+    url: "/api/mapKey",
   });
   return data.data;
 };

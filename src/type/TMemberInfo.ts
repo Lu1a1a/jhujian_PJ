@@ -1,3 +1,3 @@
 export type TMemberInfo = {
-  [key: string]: string | number;
+  [key: string]: string;
 };
